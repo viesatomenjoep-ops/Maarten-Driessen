@@ -1,0 +1,28 @@
+# ---- Secrets ----
+.env
+.env.local
+.env.*.local
+config.local.js
+
+# ---- Docker volumes ----
+md_pgdata/
+md_pgadmin/
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+*.swp
+
+# ---- IDE ----
+.vscode/
+.idea/
+.antigravity/cache/
+
+# ---- Backups & dumps ----
+*.sql.bak
+backup-*.sql
+*.dump
+
+# ---- Logs ----
+*.log
+npm-debug.log*

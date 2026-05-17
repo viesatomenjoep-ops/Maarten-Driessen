@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Maarten Driessen Sporthorses — Quality Jumping Horses</title>
+<meta name="description" content="Maarten Driessen Sporthorses — Belgian top sporthorses, jumping stallions, mares and geldings. We find you your quality horse." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF7F2;
+  --bg-2:#F2ECE1;
+  --sand:#C9B49A;
+  --sand-soft:#E8DCC8;
+  --sand-deep:#8B7355;
+  --ink:#0A0A0A;
+  --ink-2:#2A2A2A;
+  --muted:#7A7068;
+  --line:#E4DCCC;
+  --accent:#1B1B1B;
+  --gold:#A1865B;
+  --shadow:0 30px 60px -25px rgba(20,16,10,.25);
+  --r:14px;
+  --r-lg:22px;
+  --container:1280px;
+  --display:'Fraunces', Georgia, serif;
+  --sans:'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.55}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none}
+.container{max-width:var(--container);margin:0 auto;padding:0 28px}
+h1,h2,h3,h4{font-family:var(--display);font-weight:500;letter-spacing:-.01em;margin:0;color:var(--ink)}
+h1{font-size:clamp(40px,6vw,82px);line-height:1.02;font-weight:400}
+h2{font-size:clamp(28px,3.4vw,48px);line-height:1.08;font-weight:400}
+h3{font-size:clamp(20px,1.6vw,26px);line-height:1.2}
+p{color:var(--ink-2);margin:0 0 14px}
+.eyebrow{font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--sand-deep);font-weight:500;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:18px;height:1px;background:var(--sand-deep);display:inline-block}
+
+/* TOPBAR */
+.topbar{background:var(--ink);color:#EFE9DC;font-size:12.5px;letter-spacing:.04em}
+.topbar .container{display:flex;align-items:center;justify-content:space-between;padding-top:10px;padding-bottom:10px}
+.topbar a{opacity:.85;transition:opacity .2s}
+.topbar a:hover{opacity:1}
+.topbar .sep{opacity:.35;margin:0 14px}
+.lang-switch{display:flex;gap:6px}
+.lang-switch button{color:#EFE9DC;font-size:11.5px;letter-spacing:.12em;padding:4px 8px;border-radius:6px;opacity:.55;transition:.2s}
+.lang-switch button.active{background:rgba(255,255,255,.08);opacity:1}
+.lang-switch button:hover{opacity:1}
+
+/* HEADER */
+header.site{position:sticky;top:0;z-index:50;background:rgba(250,247,242,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-mark{width:42px;height:42px;border-radius:50%;background:var(--ink);color:#FAF7F2;display:grid;place-items:center;font-family:var(--display);font-size:18px;font-weight:500;letter-spacing:.04em}
+.brand-text{line-height:1.05}
+.brand-text strong{font-family:var(--display);font-weight:500;font-size:18px;letter-spacing:.01em;display:block}
+.brand-text span{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+nav.primary{display:flex;gap:32px;align-items:center}
+nav.primary a{font-size:13.5px;letter-spacing:.06em;color:var(--ink-2);position:relative;padding:6px 0;transition:.2s}
+nav.primary a:hover{color:var(--ink)}
+nav.primary a::after{content:"";position:absolute;left:0;bottom:0;height:1px;background:var(--ink);width:0;transition:width .25s}
+nav.primary a:hover::after{width:100%}
+.nav-cta{display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:999px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;transition:all .25s;font-weight:500;border:1px solid transparent}
+.btn-primary{background:var(--ink);color:#FAF7F2}
+.btn-primary:hover{background:#fff;color:var(--ink);box-shadow:0 0 0 1px var(--ink) inset}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:#FAF7F2}
+.btn-sand{background:var(--sand);color:var(--ink)}
+.btn-sand:hover{background:var(--ink);color:var(--bg)}
+.menu-toggle{display:none}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;background:var(--bg)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:end;padding:70px 0 90px}
+.hero h1 em{font-style:italic;color:var(--sand-deep);font-weight:300}
+.hero .lede{font-size:18px;color:var(--ink-2);max-width:520px;margin:28px 0 38px}
+.hero-meta{display:flex;gap:42px;margin-top:64px;border-top:1px solid var(--line);padding-top:28px;max-width:560px}
+.hero-meta div span{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.hero-meta div strong{font-family:var(--display);font-weight:500;font-size:30px;display:block}
+.hero-meta div small{font-size:12.5px;color:var(--ink-2)}
+
+/* HERO SLIDER */
+.slider{position:relative;border-radius:var(--r-lg);overflow:hidden;background:var(--sand-soft);box-shadow:var(--shadow)}
+.slides{display:flex;transition:transform .9s cubic-bezier(.7,0,.2,1);height:560px}
+.slide{flex:0 0 100%;position:relative}
+.slide img{width:100%;height:100%;object-fit:cover}
+.slide-cap{position:absolute;left:24px;bottom:24px;color:#FAF7F2;background:rgba(10,10,10,.55);backdrop-filter:blur(8px);padding:12px 18px;border-radius:999px;font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.slider-arrows{position:absolute;right:18px;bottom:18px;display:flex;gap:8px}
+.slider-arrows button{width:44px;height:44px;border-radius:50%;background:rgba(250,247,242,.92);color:var(--ink);display:grid;place-items:center;font-size:18px;transition:.2s}
+.slider-arrows button:hover{background:#fff;transform:translateY(-1px)}
+.slider-dots{position:absolute;left:24px;top:24px;display:flex;gap:6px}
+.slider-dots span{width:24px;height:2px;background:rgba(250,247,242,.4)}
+.slider-dots span.active{background:#FAF7F2}
+
+/* MARQUEE */
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2);padding:14px 0;overflow:hidden;white-space:nowrap}
+.marquee-track{display:inline-flex;gap:60px;animation:scroll 38s linear infinite;font-family:var(--display);font-size:18px;color:var(--ink-2);letter-spacing:.04em}
+.marquee-track span{display:inline-flex;gap:60px;align-items:center}
+.marquee-track .dot{width:5px;height:5px;border-radius:50%;background:var(--sand)}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTION */
+section{padding:110px 0;position:relative}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:54px;flex-wrap:wrap}
+.section-head .left{max-width:680px}
+.section-head h2{margin-top:18px}
+.section-head .right{color:var(--ink-2);max-width:420px;font-size:15.5px}
+
+/* HORSES GRID */
+.horses{background:var(--bg)}
+.horses-controls{display:flex;gap:8px;margin:0 0 36px;flex-wrap:wrap}
+.chip{padding:9px 16px;border-radius:999px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;background:var(--bg-2);color:var(--ink-2);border:1px solid var(--line);transition:.2s}
+.chip:hover{background:var(--sand-soft)}
+.chip.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:transform .35s, box-shadow .35s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.card .photo{aspect-ratio:4/5;background:var(--sand-soft);position:relative;overflow:hidden}
+.card .photo img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+.card:hover .photo img{transform:scale(1.05)}
+.card .badge{position:absolute;top:14px;left:14px;background:rgba(250,247,242,.92);backdrop-filter:blur(6px);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:999px;color:var(--ink)}
+.card .badge.sold{background:var(--ink);color:var(--bg)}
+.card .body{padding:20px 22px 24px}
+.card .name{font-family:var(--display);font-size:21px;font-weight:500;margin:0 0 6px}
+.card .meta{display:flex;gap:14px;font-size:12.5px;color:var(--muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:.08em}
+.card .meta span+span::before{content:"•";margin-right:14px;color:var(--sand)}
+.card .pedigree{font-size:13px;color:var(--ink-2);line-height:1.45;border-top:1px solid var(--line);padding-top:14px;font-style:italic;font-family:var(--display)}
+
+/* WIDE SLIDER (featured horses) */
+.featured{background:var(--bg-2);padding-top:130px;padding-bottom:130px;position:relative;overflow:hidden}
+.featured::before{content:"";position:absolute;inset:auto -10% -40% auto;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,var(--sand-soft),transparent 70%);opacity:.7;pointer-events:none}
+.fslider{position:relative}
+.ftrack{display:flex;gap:24px;transition:transform .8s cubic-bezier(.7,0,.2,1)}
+.fcard{flex:0 0 calc((100% - 48px)/3);background:#fff;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line)}
+.fcard .photo{aspect-ratio:1/1;background:var(--sand)}
+.fcard .photo img{width:100%;height:100%;object-fit:cover}
+.fcard .body{padding:28px}
+.fcard .name{font-family:var(--display);font-size:28px;margin-bottom:8px}
+.fcard .ped{color:var(--muted);font-size:13px;margin-bottom:18px;letter-spacing:.04em}
+.fcard .row{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:18px;font-size:13px}
+.fcontrol{display:flex;justify-content:space-between;align-items:center;margin-top:42px}
+.fcontrol .arrows{display:flex;gap:10px}
+.fcontrol .arrows button{width:52px;height:52px;border-radius:50%;border:1px solid var(--ink);background:transparent;color:var(--ink);font-size:18px;transition:.2s}
+.fcontrol .arrows button:hover{background:var(--ink);color:var(--bg)}
+.fcontrol .progress{flex:1;max-width:300px;height:1px;background:var(--line);position:relative;margin:0 30px}
+.fcontrol .progress i{position:absolute;left:0;top:0;height:1px;background:var(--ink);width:33%;transition:width .6s}
+
+/* SERVICES */
+.services{background:var(--ink);color:#EFE9DC}
+.services h2{color:#FAF7F2}
+.services .eyebrow{color:var(--sand)}
+.services .eyebrow::before{background:var(--sand)}
+.services p{color:rgba(239,233,220,.75)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(239,233,220,.12);border:1px solid rgba(239,233,220,.12);border-radius:var(--r-lg);overflow:hidden;margin-top:60px}
+.svc{background:var(--ink);padding:46px 38px;position:relative;transition:.3s}
+.svc:hover{background:#161616}
+.svc .num{font-family:var(--display);font-size:14px;color:var(--sand);letter-spacing:.16em;margin-bottom:32px;display:block}
+.svc h3{color:#FAF7F2;margin-bottom:14px}
+.svc p{font-size:14.5px;line-height:1.65;margin-bottom:0}
+
+/* REFERENCES */
+.refs{background:var(--bg)}
+.refs-list{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.ref{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.ref .img{aspect-ratio:16/10;background:var(--sand-soft);overflow:hidden}
+.ref .img img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+.ref:hover .img img{transform:scale(1.04)}
+.ref .body{padding:22px 24px;flex:1;display:flex;flex-direction:column;gap:8px}
+.ref .date{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--sand-deep)}
+.ref .ttl{font-family:var(--display);font-size:22px;line-height:1.2}
+.ref .loc{font-size:13.5px;color:var(--muted);margin-top:4px}
+
+/* STABLE */
+.stable{background:var(--bg-2)}
+.stable-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:140px;gap:12px;margin-top:50px}
+.stable-grid .ph{background:var(--sand);border-radius:var(--r);overflow:hidden}
+.stable-grid .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1s}
+.stable-grid .ph:hover img{transform:scale(1.06)}
+.ph.t-1{grid-column:span 5;grid-row:span 2}
+.ph.t-2{grid-column:span 4;grid-row:span 2}
+.ph.t-3{grid-column:span 3;grid-row:span 1}
+.ph.t-4{grid-column:span 3;grid-row:span 1}
+.ph.t-5{grid-column:span 4;grid-row:span 2}
+.ph.t-6{grid-column:span 4;grid-row:span 1}
+.ph.t-7{grid-column:span 4;grid-row:span 1}
+
+/* INTAKE / WHAT CAN WE DO */
+.intake{background:var(--bg)}
+.intake-wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:80px;align-items:start}
+.intake-side h2 em{font-style:italic;color:var(--sand-deep);font-weight:300}
+.intake-side .quote{font-family:var(--display);font-style:italic;font-size:22px;margin-top:38px;border-left:2px solid var(--sand);padding:6px 0 6px 22px;color:var(--ink-2);max-width:380px}
+.intake-side .quote-by{font-family:var(--sans);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:12px}
+.form{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:42px}
+.form .step{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--sand-deep);margin-bottom:6px}
+.form-row{margin-bottom:30px}
+.form-row label{display:block;font-size:13px;letter-spacing:.04em;color:var(--ink);margin-bottom:14px;font-weight:500}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts .opt{padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:#FAF7F2;font-size:13px;color:var(--ink-2);transition:.2s;cursor:pointer}
+.opts .opt.active,.opts .opt:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.input,select.input,textarea.input{width:100%;padding:14px 16px;border-radius:10px;border:1px solid var(--line);background:#FAF7F2;font-size:14.5px;font-family:inherit;color:var(--ink)}
+.input:focus,textarea.input:focus{outline:0;border-color:var(--ink);background:#fff}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.submit-row{margin-top:14px;display:flex;justify-content:space-between;align-items:center;gap:20px;border-top:1px solid var(--line);padding-top:24px}
+.submit-row small{color:var(--muted);font-size:12.5px;max-width:280px;line-height:1.5}
+
+/* NEWS */
+.news{background:var(--bg-2)}
+.news-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px}
+.news .feat{position:relative;border-radius:var(--r-lg);overflow:hidden;min-height:520px;background:var(--ink);color:#fff}
+.news .feat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.7}
+.news .feat .cnt{position:absolute;left:0;right:0;bottom:0;padding:42px;background:linear-gradient(transparent,rgba(0,0,0,.85))}
+.news .feat .cnt h3{color:#fff;font-size:32px;font-weight:400;margin-bottom:10px}
+.news .feat .cnt span{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--sand)}
+.news .col{display:flex;flex-direction:column;gap:24px}
+.news .item{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:8px;flex:1}
+.news .item .d{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--sand-deep)}
+.news .item h4{font-family:var(--display);font-size:19px;font-weight:500;line-height:1.25}
+.news .item p{font-size:13.5px;color:var(--ink-2);margin:auto 0 0}
+
+/* CTA strip */
+.cta-strip{background:var(--ink);color:#FAF7F2;padding:80px 0}
+.cta-strip .row{display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap}
+.cta-strip h2{color:#FAF7F2;font-size:clamp(28px,3.4vw,46px);font-weight:400}
+.cta-strip h2 em{color:var(--sand);font-style:italic;font-weight:300}
+
+/* FOOTER */
+footer{background:var(--bg);color:var(--ink-2);padding:80px 0 30px;border-top:1px solid var(--line)}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:60px}
+.foot h5{font-family:var(--display);font-weight:500;font-size:18px;margin-bottom:18px;color:var(--ink)}
+.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.foot a{font-size:14px;color:var(--ink-2);opacity:.8}
+.foot a:hover{opacity:1;color:var(--ink)}
+.foot .brand-block p{font-size:14px;max-width:340px;line-height:1.6}
+.copy{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted)}
+
+/* RESPONSIVE */
+@media (max-width:1100px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .slides{height:440px}
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .fcard{flex:0 0 calc((100% - 24px)/2)}
+  .news-grid{grid-template-columns:1fr 1fr}
+  .news .feat{grid-column:1/-1;min-height:380px}
+  .foot{grid-template-columns:1fr 1fr}
+  .intake-wrap{grid-template-columns:1fr}
+}
+@media (max-width:740px){
+  nav.primary{display:none}
+  .menu-toggle{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--ink);color:var(--bg)}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .svc-grid{grid-template-columns:1fr}
+  .refs-list{grid-template-columns:1fr}
+  .stable-grid{grid-template-columns:repeat(4,1fr)}
+  .ph.t-1,.ph.t-2,.ph.t-3,.ph.t-4,.ph.t-5,.ph.t-6,.ph.t-7{grid-column:span 4;grid-row:span 1}
+  .two{grid-template-columns:1fr}
+  .form{padding:28px}
+  .hero{padding:0}
+  section{padding:70px 0}
+  .news-grid{grid-template-columns:1fr}
+  .copy{flex-direction:column;gap:10px}
+  .foot{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <div class="container">
+    <div>
+      <a href="tel:+32474444059">+32 474 444 059</a>
+      <span class="sep">|</span>
+      <a href="https://api.whatsapp.com/send?phone=%2B32474444059">WhatsApp</a>
+      <span class="sep">|</span>
+      <a href="mailto:info@maartendriessen.be">info@maartendriessen.be</a>
+    </div>
+    <div class="lang-switch" id="langSwitch">
+      <button data-lang="nl" class="active">NL</button>
+      <button data-lang="en">EN</button>
+      <button data-lang="fr">FR</button>
+      <button data-lang="de">DE</button>
+      <span class="sep">|</span>
+      <a href="admin.html" style="font-size:11.5px;letter-spacing:.12em;">ADMIN →</a>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="site">
+  <div class="container nav">
+    <a href="#" class="brand">
+      <div class="brand-mark">MD</div>
+      <div class="brand-text">
+        <strong>Maarten Driessen</strong>
+        <span>Sporthorses · Belgium</span>
+      </div>
+    </a>
+    <nav class="primary">
+      <a href="#horses" data-i18n="nav.horses">Paarden</a>
+      <a href="#featured" data-i18n="nav.collection">Collectie</a>
+      <a href="#references" data-i18n="nav.references">Referenties</a>
+      <a href="#stable" data-i18n="nav.stable">Stables</a>
+      <a href="#news" data-i18n="nav.news">News</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#intake" class="btn btn-primary" data-i18n="nav.findhorse">Vind je paard</a>
+      <button class="menu-toggle">≡</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow" data-i18n="hero.eyebrow">Belgian Sporthorses · Est. 1995</span>
+      <h1 style="margin-top:22px">
+        <span data-i18n="hero.l1">We find you</span><br/>
+        <em data-i18n="hero.l2">your quality horse.</em>
+      </h1>
+      <p class="lede" data-i18n="hero.lede">
+        Een zorgvuldig samengestelde selectie internationale springpaarden,
+        van veelbelovende veulens tot wedstrijdrijp talent. Premium kwaliteit,
+        eerlijke begeleiding en wereldwijde service vanuit hartje België.
+      </p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="#featured" data-i18n="hero.cta1">Bekijk collectie</a>
+        <a class="btn btn-ghost" href="#intake" data-i18n="hero.cta2">Stel je wensen samen</a>
+      </div>
+      <div class="hero-meta">
+        <div><span data-i18n="meta.horses">Paarden</span><strong>140+</strong><small data-i18n="meta.horses.s">in onze database</small></div>
+        <div><span data-i18n="meta.refs">Referenties</span><strong>60+</strong><small data-i18n="meta.refs.s">5* prestaties wereldwijd</small></div>
+        <div><span data-i18n="meta.years">Ervaring</span><strong>30 jr</strong><small data-i18n="meta.years.s">in topsport &amp; handel</small></div>
+      </div>
+    </div>
+    <div class="slider" id="heroSlider">
+      <div class="slider-dots"><span class="active"></span><span></span><span></span><span></span><span></span></div>
+      <div class="slides">
+        <div class="slide"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/45-high-x5wew8.jpg?enable-io=true&fit=bounds&width=1400&height=900" alt="Springpaard"><div class="slide-cap">Rubel · 1.60m DOHA winner</div></div>
+        <div class="slide"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/coup-de-foudre-high-sdm922.png?enable-io=true&fit=bounds&width=1400&height=900" alt="Coup de Foudre"><div class="slide-cap">Coup de Foudre · CWD Ambassador</div></div>
+        <div class="slide"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/joi21-high-bm5mex.jpg?enable-io=true&fit=bounds&width=1400&height=900" alt="Joie de Vigo"><div class="slide-cap">Joie de Vigo · CSI 5*</div></div>
+        <div class="slide"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/cusco-high-bt6c3d.png?enable-io=true&fit=bounds&width=1400&height=900" alt="Cusco"><div class="slide-cap">Cusco · Top jumping prospect</div></div>
+        <div class="slide"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/morinne-donnay-high.jpg?enable-io=true&fit=bounds&width=1400&height=900" alt="Morinne Donnay"><div class="slide-cap">Morinne Donnay &amp; team</div></div>
+      </div>
+      <div class="slider-arrows">
+        <button id="hpv">‹</button>
+        <button id="hnx">›</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span><span class="dot"></span> WEF Wellington <span class="dot"></span> CSI 5* Doha <span class="dot"></span> Aachen <span class="dot"></span> Peelbergen <span class="dot"></span> Lummen <span class="dot"></span> Madrid GCL <span class="dot"></span> Zangersheide WC <span class="dot"></span> Oliva Nova <span class="dot"></span> Bonheiden CSI <span class="dot"></span> Spa-Francorchamps <span class="dot"></span></span>
+    <span><span class="dot"></span> WEF Wellington <span class="dot"></span> CSI 5* Doha <span class="dot"></span> Aachen <span class="dot"></span> Peelbergen <span class="dot"></span> Lummen <span class="dot"></span> Madrid GCL <span class="dot"></span> Zangersheide WC <span class="dot"></span> Oliva Nova <span class="dot"></span> Bonheiden CSI <span class="dot"></span> Spa-Francorchamps <span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- HORSES CATALOGUE -->
+<section class="horses" id="horses">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <span class="eyebrow" data-i18n="hor.eyebrow">Onze collectie</span>
+        <h2 data-i18n="hor.title">Jumping horses, by year of birth.</h2>
+      </div>
+      <div class="right" data-i18n="hor.desc">
+        Verken onze uitzonderlijke selectie veelbelovende springpaarden.
+        Filter op geboortejaar, geslacht of opleidingsniveau.
+      </div>
+    </div>
+
+    <div class="horses-controls" id="yearFilter">
+      <button class="chip active" data-year="all">All</button>
+      <button class="chip" data-year="2025">2025</button>
+      <button class="chip" data-year="2024">2024</button>
+      <button class="chip" data-year="2023">2023</button>
+      <button class="chip" data-year="2022">2022</button>
+      <button class="chip" data-year="2021">2021</button>
+      <button class="chip" data-year="2020">2020</button>
+      <button class="chip" data-year="2019">2019</button>
+      <button class="chip" data-year="2018">2018</button>
+      <button class="chip" data-year="2017">2017</button>
+      <button class="chip" data-year="2016">2016</button>
+      <button class="chip" data-year="foals">Embryo's &amp; Foals</button>
+    </div>
+
+    <div class="grid" id="horseGrid"></div>
+    <div style="text-align:center;margin-top:50px"><a href="#" class="btn btn-ghost" id="loadMore">Toon meer paarden</a></div>
+  </div>
+</section>
+
+<!-- FEATURED SLIDER -->
+<section class="featured" id="featured">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <span class="eyebrow">Featured</span>
+        <h2>Onze toppers, in de spotlight.</h2>
+      </div>
+      <div class="right">Drie van de meest besproken paarden uit onze huidige collectie — internationaal opgeleid, klaar voor topsport.</div>
+    </div>
+    <div class="fslider">
+      <div class="ftrack" id="ftrack">
+        <div class="fcard">
+          <div class="photo"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-xgd65r.png?enable-io=true&fit=bounds&width=900" alt="Rubel"></div>
+          <div class="body">
+            <div class="name">Rubel</div>
+            <div class="ped">Quint vh Maarlo × Nevado vd Rostal</div>
+            <div class="row"><span>°2017 · Mare</span><span>1.60m</span></div>
+          </div>
+        </div>
+        <div class="fcard">
+          <div class="photo"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-4glt3f.png?enable-io=true&fit=bounds&width=900" alt="Charisma"></div>
+          <div class="body">
+            <div class="name">Charisma vd Broekkant Z</div>
+            <div class="ped">Cicero van Paemel Z × Cornet Obolensky</div>
+            <div class="row"><span>°2017 · Mare</span><span>1.50m</span></div>
+          </div>
+        </div>
+        <div class="fcard">
+          <div class="photo"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-8xl960.png?enable-io=true&fit=bounds&width=900" alt="Socratis L"></div>
+          <div class="body">
+            <div class="name">Socratis L</div>
+            <div class="ped">Lector</div>
+            <div class="row"><span>°2018 · Gelding</span><span>1.40m</span></div>
+          </div>
+        </div>
+        <div class="fcard">
+          <div class="photo"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-bi8icx.png?enable-io=true&fit=bounds&width=900" alt="Emilio Blanco"></div>
+          <div class="body">
+            <div class="name">Emilio Blanco PS</div>
+            <div class="ped">Eldorado × Chacco</div>
+            <div class="row"><span>°2018 · Gelding</span><span>1.40m</span></div>
+          </div>
+        </div>
+        <div class="fcard">
+          <div class="photo"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-n33dvh.png?enable-io=true&fit=bounds&width=900" alt="Bravo Manslein"></div>
+          <div class="body">
+            <div class="name">Bravo Manslein Z</div>
+            <div class="ped">Big-Star Jr × Totoche du Banney</div>
+            <div class="row"><span>°2015 · Gelding</span><span>1.45m</span></div>
+          </div>
+        </div>
+        <div class="fcard">
+          <div class="photo"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-y5tsm8.png?enable-io=true&fit=bounds&width=900" alt="Labrina"></div>
+          <div class="body">
+            <div class="name">Labrina</div>
+            <div class="ped">Grand Slam VDL × Lupicor × Lux Z</div>
+            <div class="row"><span>°2016 · Mare</span><span>1.40m</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="fcontrol">
+        <div><strong style="font-family:var(--display);font-size:18px;" id="fcount">01 / 06</strong></div>
+        <div class="progress"><i id="fprog"></i></div>
+        <div class="arrows">
+          <button id="fpv">←</button>
+          <button id="fnx">→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <span class="eyebrow">What we do</span>
+        <h2>Een huis dat meer levert dan een paard.</h2>
+      </div>
+      <div class="right" style="color:rgba(239,233,220,.7)">Van opsporen tot opleiden, van het stalleven tot het wereldwijde transport — alles onder één dak.</div>
+    </div>
+    <div class="svc-grid">
+      <div class="svc">
+        <span class="num">01 — Sales</span>
+        <h3>Wereldwijde verkoop</h3>
+        <p>Premium springpaarden voor amateurs tot 5* niveau. Eerlijke matching tussen ruiter en paard, met internationale klantenkring in USA, Mexico, GCC en Europa.</p>
+      </div>
+      <div class="svc">
+        <span class="num">02 — Search</span>
+        <h3>Op zoek naar jouw paard</h3>
+        <p>Vertel ons wat je zoekt en wij doen het werk. Sexe, leeftijd, ervaring, kleur, budget — wij vinden het paard dat bij jou past, ook als het niet in onze stal staat.</p>
+      </div>
+      <div class="svc">
+        <span class="num">03 — Stables</span>
+        <h3>Opleiding &amp; verblijf</h3>
+        <p>Moderne faciliteiten, ruime weides, indoor &amp; outdoor pistes, walker, lounge. Dagelijkse training onder de beste begeleiding.</p>
+      </div>
+      <div class="svc">
+        <span class="num">04 — Breeding</span>
+        <h3>Embryo's &amp; foals</h3>
+        <p>Een uitgelezen selectie embryo's uit topmoederlijnen — Lorenta, Kayenne vd Broekkant — beschikbaar voor handel of eigen opfok.</p>
+      </div>
+      <div class="svc">
+        <span class="num">05 — Transport</span>
+        <h3>Wereldwijd transport</h3>
+        <p>Volledige begeleiding bij export — gezondheidspapieren, quarantaine, charter naar USA, Latijns-Amerika, Midden-Oosten en Azië.</p>
+      </div>
+      <div class="svc">
+        <span class="num">06 — Aftercare</span>
+        <h3>Levenslang contact</h3>
+        <p>Een paard verkopen is voor ons het begin van de relatie. We blijven betrokken bij de carrière en helpen waar we kunnen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section class="refs" id="references">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <span class="eyebrow">References</span>
+        <h2>Paarden die hun verhaal verder schrijven.</h2>
+      </div>
+      <div class="right">Een selectie van paarden die wij verkochten en die intussen succesvol hun weg vinden in de internationale ring.</div>
+    </div>
+    <div class="refs-list" id="refsList"></div>
+    <div style="text-align:center;margin-top:50px"><a class="btn btn-ghost" href="#">Bekijk alle referenties</a></div>
+  </div>
+</section>
+
+<!-- STABLE -->
+<section class="stable" id="stable">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <span class="eyebrow">Our home</span>
+        <h2>Een stal die zorgt voor wat ze rijdt.</h2>
+      </div>
+      <div class="right">Indoor &amp; outdoor pistes, ruime stallen, paddocks, walker en een lounge die ruiters het gevoel geeft thuis te komen.</div>
+    </div>
+    <div class="stable-grid">
+      <div class="ph t-1"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/home-13-high.jpg?enable-io=true&fit=bounds&width=1100" alt=""></div>
+      <div class="ph t-2"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/home-11-high.jpg?enable-io=true&fit=bounds&width=900" alt=""></div>
+      <div class="ph t-3"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/home-16-high.jpg?enable-io=true&fit=bounds&width=600" alt=""></div>
+      <div class="ph t-4"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/home-18-high.png?enable-io=true&fit=bounds&width=600" alt=""></div>
+      <div class="ph t-5"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/home-17-high.jpg?enable-io=true&fit=bounds&width=800" alt=""></div>
+      <div class="ph t-6"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/stal-11-high.jpg?enable-io=true&fit=bounds&width=800" alt=""></div>
+      <div class="ph t-7"><img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/transport-high.jpg?enable-io=true&fit=bounds&width=800" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<!-- INTAKE -->
+<section class="intake" id="intake">
+  <div class="container intake-wrap">
+    <div class="intake-side">
+      <span class="eyebrow">Intake module</span>
+      <h2 style="margin-top:22px">What can we<br/><em>do 4 you?</em></h2>
+      <p style="margin-top:24px;font-size:16px;max-width:420px">
+        Vertel ons in een paar klikken wat je zoekt. We bekijken onze stal én ons internationale netwerk,
+        en komen terug met een persoonlijke shortlist. Geen verplichtingen — wél echte expertise.
+      </p>
+      <div class="quote">
+        "Eerlijk advies, het juiste paard voor de juiste ruiter. Dat is het enige dat ons drijft."
+        <div class="quote-by">Maarten Driessen</div>
+      </div>
+    </div>
+    <form class="form" onsubmit="event.preventDefault();alert('Bedankt! We nemen binnen 24u contact op.');this.reset();">
+      <div class="step">Step 01 — Profiel</div>
+      <h3 style="margin-bottom:30px">Vertel ons wat je zoekt.</h3>
+
+      <div class="form-row">
+        <label>Geslacht</label>
+        <div class="opts" data-multi>
+          <span class="opt">Hengst</span>
+          <span class="opt">Merrie</span>
+          <span class="opt">Ruin</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Leeftijd</label>
+        <div class="opts" data-multi>
+          <span class="opt">2-3 jaar</span>
+          <span class="opt">3-4 jaar</span>
+          <span class="opt">4-5 jaar</span>
+          <span class="opt">6-7 jaar</span>
+          <span class="opt">8-9 jaar</span>
+          <span class="opt">10-11 jaar</span>
+          <span class="opt">12-13 jaar</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Ervaringsniveau</label>
+        <div class="opts">
+          <span class="opt">Niet beleerd</span>
+          <span class="opt">Tot 90 cm</span>
+          <span class="opt">Tot 110 cm</span>
+          <span class="opt">Tot 130 cm</span>
+          <span class="opt">Tot 140 cm</span>
+          <span class="opt">150 cm &amp; hoger</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Voorkeurskleur</label>
+        <div class="opts" data-multi>
+          <span class="opt">Zwart</span>
+          <span class="opt">Bruin</span>
+          <span class="opt">Wit</span>
+          <span class="opt">Vos</span>
+          <span class="opt">Bay</span>
+          <span class="opt">Schimmel</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Indicatief budget</label>
+        <div class="opts">
+          <span class="opt">€ 15-30k</span>
+          <span class="opt">€ 30-60k</span>
+          <span class="opt">€ 60-120k</span>
+          <span class="opt">€ 120k +</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Opmerkingen of specifieke wensen</label>
+        <textarea class="input" rows="3" placeholder="Vertel ons over jezelf, je ruiterprofiel en wat je écht zoekt."></textarea>
+      </div>
+
+      <div class="form-row two">
+        <input class="input" placeholder="Voornaam en naam" required>
+        <input class="input" placeholder="E-mail" type="email" required>
+      </div>
+      <div class="form-row two">
+        <input class="input" placeholder="Telefoon (+...)" required>
+        <select class="input">
+          <option>Land — selecteer</option>
+          <option>België</option><option>Nederland</option><option>Frankrijk</option><option>Duitsland</option>
+          <option>USA</option><option>Mexico</option><option>UK</option><option>UAE</option><option>Andere</option>
+        </select>
+      </div>
+
+      <div class="submit-row">
+        <small>We bewaren je gegevens enkel om jouw vraag op te volgen.</small>
+        <button type="submit" class="btn btn-primary">Verstuur aanvraag</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="news" id="news">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <span class="eyebrow">News &amp; updates</span>
+        <h2>Het laatste van de piste.</h2>
+      </div>
+      <div class="right">Resultaten, wedstrijden en moves uit onze stal en die van onze klanten.</div>
+    </div>
+    <div class="news-grid">
+      <div class="feat">
+        <img src="https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/news-260510-high.jpg?enable-io=true&fit=bounds&width=1100" alt="">
+        <div class="cnt">
+          <span>Mei 2026 · 3* Lier (BE)</span>
+          <h3>Rubel &amp; Morinne Donnay schrijven opnieuw geschiedenis</h3>
+          <p style="color:rgba(255,255,255,.85);margin:0">Double clear en een plaats in de top-5 van de ranking class met 95 deelnemers.</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="item">
+          <span class="d">Apr 2026 · Bonheiden CSI</span>
+          <h4>Charisma &amp; Emilio Blanco beiden in de prijzen</h4>
+          <p>Een sterk weekend op eigen bodem voor twee toppers uit onze stal.</p>
+        </div>
+        <div class="item">
+          <span class="d">Feb 2026 · Wellington (USA)</span>
+          <h4>Snapchat 2° op FEI WEC 2* Ocala</h4>
+          <p>Ward McClain rijdt onze Snapchat van de Broekkant naar een schitterend resultaat.</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="item">
+          <span class="d">Feb 2026 · Doha (UAE)</span>
+          <h4>Quickly vh Ijzeren Lindenhof wint 6-Bars</h4>
+          <p>Volle zus van Rubel maakt indruk in Doha — een blijvende lijn van topklasse.</p>
+        </div>
+        <div class="item">
+          <span class="d">Mei 2025 · GCL Madrid</span>
+          <h4>Jup &amp; Origi in actie op Madrid GCL</h4>
+          <p>Beide oud-paarden van het huis blijven schitteren in de Global Champions League.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="cta-strip" id="contact">
+  <div class="container row">
+    <div>
+      <h2>Klaar om<br/><em>jouw paard te vinden?</em></h2>
+      <p style="color:rgba(239,233,220,.7);margin:18px 0 0;max-width:520px">+32 474 444 059 · Maaseik, België · 7d/7 bereikbaar via WhatsApp.</p>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn btn-sand" href="tel:+32474444059">Bel ons</a>
+      <a class="btn btn-ghost" style="color:#fff;border-color:#fff" href="https://api.whatsapp.com/send?phone=%2B32474444059">WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot">
+      <div class="brand-block">
+        <div class="brand" style="margin-bottom:18px">
+          <div class="brand-mark">MD</div>
+          <div class="brand-text"><strong>Maarten Driessen</strong><span>Sporthorses · Belgium</span></div>
+        </div>
+        <p>We find you your quality horse. Premium Belgian sporthorses,
+          hand-picked en wereldwijd geleverd, met de zorg van een familiestal en de schaal van een internationaal bedrijf.</p>
+      </div>
+      <div>
+        <h5>Navigeer</h5>
+        <ul>
+          <li><a href="#horses">Paarden</a></li>
+          <li><a href="#featured">Featured</a></li>
+          <li><a href="#references">Referenties</a></li>
+          <li><a href="#stable">Stables</a></li>
+          <li><a href="#news">News</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Diensten</h5>
+        <ul>
+          <li><a href="#">Verkoop</a></li>
+          <li><a href="#">Op zoek naar jouw paard</a></li>
+          <li><a href="#">Opleiding &amp; verblijf</a></li>
+          <li><a href="#">Embryo's &amp; foals</a></li>
+          <li><a href="#">Wereldwijd transport</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="tel:+32474444059">+32 474 444 059</a></li>
+          <li><a href="mailto:info@maartendriessen.be">info@maartendriessen.be</a></li>
+          <li><a href="https://api.whatsapp.com/send?phone=%2B32474444059">WhatsApp</a></li>
+          <li><a href="https://facebook.com/maarten-driessen-sporthorses-1750142525238498/">Facebook</a></li>
+          <li><a href="https://instagram.com/maarten_driessen_sporthorses">Instagram</a></li>
+          <li><a href="https://www.youtube.com/@MaartenDriessenSporthorses/videos">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copy">
+      <div>© 2026 Maarten Driessen Sporthorses — alle rechten voorbehouden.</div>
+      <div><a href="#">Privacy</a> · <a href="#">Cookies</a> · <a href="admin.html">Admin login</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- DATA (afgeleid van de scrape) ---------- */
+const HORSES = [
+  // 2025
+  {n:"Kay Blue",y:2025,sex:"Mare",ped:"Cero Blue × Ustinov × Concorde",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/horse-pic-free-standard.jpg",lv:"Foal"},
+  // 2024
+  {n:"Cognac van 't Breezerhof Z",y:2024,sex:"Stallion",ped:"Comilfaut × Indiangold × Linotte de Sohan",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/cognac-1-high-xdte85.jpg?enable-io=true&fit=bounds&width=800",lv:"Foal"},
+  {n:"A Star de Rock 1 Z",y:2024,sex:"Mare",ped:"Aganix × Dominator",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/dancing-star-de-rock-1-2-high.png?enable-io=true&fit=bounds&width=800",lv:"Foal"},
+  {n:"Balou de Reverton × Balouka Hero",y:2024,sex:"Mare",ped:"Balou de Reverton × Balouka Hero",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/horse-pic-free-standard-7af9oy.jpg",lv:"Foal"},
+  // 2023
+  {n:"Catobelleau DBH Z",y:2023,sex:"Stallion",ped:"Catoki × Clearway (Capitol I)",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/catobelleau-12-high-ii8wh8.jpg?enable-io=true&fit=bounds&width=800",lv:"Young"},
+  {n:"Indy Chavannais Z",y:2023,sex:"Stallion",ped:"Igor Chavannais × Ducati vh Schuttershof",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/horse-pic-free-standard-p3kawd.jpg",lv:"Young"},
+  // 2022
+  {n:"Acapulco van Twelve Oaks Z",y:2022,sex:"Stallion",ped:"Aganix × Quick Lauro Z",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/horse-pic-free-standard-8z1r31.jpg",lv:"Young"},
+  {n:"Donnarike JMS Z",y:2022,sex:"Mare",ped:"Denzel van 't Meulenhof × Warrant",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/horse-pic-free-standard-8z1r31.jpg",lv:"Young"},
+  {n:"Elaritz Z",y:2022,sex:"Gelding",ped:"Eldorado vd Zeshoek × Dinken (Diarado)",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/elaritz-z-12-high-swwy5p.jpg?enable-io=true&fit=bounds&width=800",lv:"Young"},
+  {n:"Picasso JMS Z",y:2022,sex:"Stallion",ped:"Pegase van 't Ruytershof × Cancara Z",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/picasso-11b-high.jpg?enable-io=true&fit=bounds&width=800",lv:"Young"},
+  {n:"S10",y:2022,sex:"Mare",ped:"Avenger Z × Unistar",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-w6e3q8.png?enable-io=true&fit=bounds&width=800",lv:"Young"},
+  {n:"Warrior",y:2022,sex:"Stallion",ped:"Ermitage × Casall",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/horse-pic-free-standard-8z1r31.jpg",lv:"Young"},
+  // 2021
+  {n:"Carambol × _ _",y:2021,sex:"Mare",ped:"Carambol",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/carambol-11-high.jpg?enable-io=true&fit=bounds&width=800",lv:"4yo"},
+  {n:"Batrizia Blue PS",y:2021,sex:"Mare",ped:"Baloutaire PS × Chacco Blue",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/horsepicfree-10.jpg",lv:"4yo"},
+  {n:"Cairo van Kattenheyde Z",y:2021,sex:"Gelding",ped:"Colorit × Mister Blue",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/horsepicfree-10.jpg",lv:"4yo"},
+  {n:"Clyde Z",y:2021,sex:"Stallion",ped:"Comilfaut × Cabrio",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/horsepicfree-10.jpg",lv:"4yo"},
+  {n:"Napoleon 2021",y:2021,sex:"Stallion",ped:"Nixon × Cancara",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/napoleon-nixon-high-aqzrfv.jpg?enable-io=true&fit=bounds&width=800",lv:"4yo"},
+  {n:"Valium vd Kesterheide",y:2021,sex:"Stallion",ped:"Orak d'Hamwyck × Sheynne de Baugy",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/horsepicfree-10.jpg",lv:"4yo"},
+  // 2020
+  {n:"Pokerlady",y:2020,sex:"Mare",ped:"Poker × Querlibet Hero",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/poker-12-high.jpg?enable-io=true&fit=bounds&width=800",lv:"5yo"},
+  {n:"Canellou",y:2020,sex:"Mare",ped:"Catoki × Baloubet",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/canellou-11-high.jpg?enable-io=true&fit=bounds&width=800",lv:"5yo"},
+  {n:"Cozira",y:2020,sex:"Mare",ped:"Cornet du Lys × Diamant de Semilly",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/coshyra-23-high-0a9a9n.jpg?enable-io=true&fit=bounds&width=800",lv:"5yo"},
+  {n:"Bamina",y:2020,sex:"Mare",ped:"Bamako de Muze × Kannan",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/horsepicfree-3.jpg",lv:"5yo"},
+  {n:"Doutzen",y:2020,sex:"Mare",ped:"Dominator × Cancare",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-z73l26.png?enable-io=true&fit=bounds&width=800",lv:"5yo"},
+  {n:"Capri Blue PS",y:2020,sex:"Mare",ped:"Cabachon × Chacco Blue",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/capri-ps-12-high.jpg?enable-io=true&fit=bounds&width=800",lv:"5yo"},
+  {n:"Casalawito PS",y:2020,sex:"Gelding",ped:"Casallco × Lawito × Balou du Rouet",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/casalwito-ps-12-high-oa16om.jpg?enable-io=true&fit=bounds&width=800",lv:"5yo"},
+  {n:"Pierce",y:2020,sex:"Gelding",ped:"Colorit × Contendro I",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/pierce-13-high.jpg?enable-io=true&fit=bounds&width=800",lv:"5yo"},
+  {n:"Ucarus van de Kloosterbos",y:2020,sex:"Gelding",ped:"Warrior × Colestus",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/ucarus-high-v9n2rf.jpg?enable-io=true&fit=bounds&width=800",lv:"5yo"},
+  {n:"Czar Hero",y:2020,sex:"Stallion",ped:"Comilfaut",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/czar-hero-11-high-anovfb.jpg?enable-io=true&fit=bounds&width=800",lv:"5yo"},
+  // 2019
+  {n:"Atlas van de Broekkant",y:2019,sex:"Gelding",ped:"Aganix du Seigneur × Cantos",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/horse-pic-free-standard-blnsep.jpg",lv:"6yo"},
+  {n:"Coup de Foudre",y:2019,sex:"Gelding",ped:"CWD ambassador horse",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/coup-de-foudre-high-sdm922.png?enable-io=true&fit=bounds&width=800",lv:"6yo"},
+  {n:"Theuwi van het Distelhof",y:2019,sex:"Mare",ped:"Emerald × Indoctro",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/theuwi-11-high.jpg?enable-io=true&fit=bounds&width=800",lv:"6yo"},
+  {n:"Orchidee van Spalbeek",y:2019,sex:"Mare",ped:"Minute Man × Diamant de Semilly",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/orchidee-v-spalbeek-high-c1i86a.jpg?enable-io=true&fit=bounds&width=800",lv:"6yo"},
+  {n:"Tequila Color",y:2019,sex:"Mare",ped:"Kassander van het Roosakker",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/tequila-12-high.jpg?enable-io=true&fit=bounds&width=800",lv:"6yo"},
+  {n:"Tiago vd Pluimert",y:2019,sex:"Gelding",ped:"Tsar Hero × Lauterbach",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/tiago-high-4e6f5n.jpg?enable-io=true&fit=bounds&width=800",lv:"6yo"},
+  {n:"Conchica PS",y:2019,sex:"Mare",ped:"Continental Blue × Chellano",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/conchica-ps-12-high-serp79.jpg?enable-io=true&fit=bounds&width=800",lv:"6yo"},
+  {n:"Checkmate from Second Life Z",y:2019,sex:"Stallion",ped:"Chellano Alpha × No Limit",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/checkmate-22-kopie-high.jpg?enable-io=true&fit=bounds&width=800",lv:"6yo"},
+  {n:"The Special Blue de Corlato",y:2019,sex:"Mare",ped:"Zirocco Blue VDL × I'm Special de Muze",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-94laea.png?enable-io=true&fit=bounds&width=800",lv:"6yo"},
+  {n:"Uricane Hero",y:2019,sex:"Gelding",ped:"Uricas × _ _ (Linotte/Femke P)",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/uricane-13-high.jpg?enable-io=true&fit=bounds&width=800",lv:"6yo"},
+  // 2018
+  {n:"Caskhan Hero Z",y:2018,sex:"Gelding",ped:"Casall × Kannan",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-65a1if.png?enable-io=true&fit=bounds&width=800",lv:"7yo"},
+  {n:"Socratis L",y:2018,sex:"Gelding",ped:"Lector",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/socratis-11-kopie-high.jpg?enable-io=true&fit=bounds&width=800",lv:"7yo"},
+  {n:"Chacouret Gold PS",y:2018,sex:"Gelding",ped:"Chacoon Blue × Balue × Lancer",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/chacouret-13-high.jpg?enable-io=true&fit=bounds&width=800",lv:"7yo"},
+  {n:"Candina Rouge PS",y:2018,sex:"Mare",ped:"Conthargos",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-mqxk4x.png?enable-io=true&fit=bounds&width=800",lv:"7yo"},
+  {n:"Kheops Hero Z",y:2018,sex:"Stallion",ped:"Kassander van 't Roosakker",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-miyu29.png?enable-io=true&fit=bounds&width=800",lv:"7yo"},
+  {n:"High Five",y:2018,sex:"Gelding",ped:"Harly × Ustinov",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/high-five-11-high-c4i52y.jpg?enable-io=true&fit=bounds&width=800",lv:"7yo"},
+  {n:"Napoleon H",y:2018,sex:"Stallion",ped:"Chester Z × Lord Z",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/napoleon-1-high.jpg",lv:"7yo"},
+  {n:"Emilio Blanco PS",y:2018,sex:"Gelding",ped:"Eldorado × Chacco",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/emilio-blanco-1-high.jpg",lv:"7yo"},
+  // 2017
+  {n:"Charisma vd Broekkant Z",y:2017,sex:"Mare",ped:"Cicero van Paemel Z × Cornet Obolensky",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-standard-gllnhb.png?enable-io=true&fit=bounds&width=800",lv:"8yo"},
+  {n:"Telle Chance de Feu Z",y:2017,sex:"Mare",ped:"Tangelo × Quadrillo",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-standard-itbrhn.png?enable-io=true&fit=bounds&width=800",lv:"8yo"},
+  {n:"Loumti - Doumti",y:2017,sex:"Gelding",ped:"Quannan × Ogano Site",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-6gv1to.png?enable-io=true&fit=bounds&width=800",lv:"8yo"},
+  {n:"D-Day vd Holsteenhoeve",y:2017,sex:"Mare",ped:"Dominator × Darco",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-jo70vm.png?enable-io=true&fit=bounds&width=800",lv:"8yo"},
+  {n:"Rubel",y:2017,sex:"Mare",ped:"Quint vh Maarlo × Nevado vd Rostal × Grand Amour",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/rubel-44-high-zm7mao.jpg?enable-io=true&fit=bounds&width=800",lv:"8yo",f:1},
+  // 2016
+  {n:"Arisa FZ Z",y:2016,sex:"Mare",ped:"Atomic × Caretino",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/horse-pic-free-standard-7k6zk5.jpg",lv:"9yo"},
+  {n:"Labrina",y:2016,sex:"Mare",ped:"Grand Slam VDL × Lupicor × Lux Z",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/labrina-11-standard.jpg?enable-io=true&fit=bounds&width=800",lv:"9yo"},
+  {n:"Lakoniek",y:2016,sex:"Gelding",ped:"Eldorado vd Zeshoek",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/lakoniek-1.jpg",lv:"9yo"},
+  // 2015
+  {n:"Bravo Manslein Z",y:2015,sex:"Gelding",ped:"Big-Star Jr × Totoche du Banney",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-lwtwh0.png?enable-io=true&fit=bounds&width=800",lv:"10yo"},
+];
+
+const REFS = [
+  {n:"Curiosa PS",d:"Mei 2026",loc:"NEHC Junior 1° & MHC Medal 2° @ Fieldsone Spring USA",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-high-3nx7o9.png?enable-io=true&fit=bounds&width=900"},
+  {n:"Peyton",d:"April 2026",loc:"CSI 2* @ Peelbergen (NL)",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/peyton-ref-high.jpg"},
+  {n:"Snapchat vd Broekkant",d:"Feb 2026",loc:"2° FEI WEC 2* Ocala FL (USA) — onder Ward McClain",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/snapshat-high.jpg"},
+  {n:"Quickly vh Ijzeren Lindenhof",d:"Feb 2026",loc:"Winner 6-Bars · Doha (UAE)",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/quickly-doha-high.jpg"},
+  {n:"Emely van de Pluimert Z",d:"Dec 2025",loc:"4° Kentucky Classic (USA)",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/emely-11-high-goiqos.jpg"},
+  {n:"Zarkava Hero Z",d:"Nov 2025",loc:"Met Johnny Pals · Maastricht 4* (NL)",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/pals-13-high.jpg?enable-io=true&fit=bounds&width=900"}
+];
+
+/* ---------- I18N (NL/EN/FR/DE) ---------- */
+const I18N = {
+  nl:{
+    "nav.horses":"Paarden","nav.collection":"Collectie","nav.references":"Referenties","nav.stable":"Stables","nav.news":"News","nav.contact":"Contact","nav.findhorse":"Vind je paard",
+    "hero.eyebrow":"Belgian Sporthorses · Est. 1995",
+    "hero.l1":"We find you","hero.l2":"your quality horse.",
+    "hero.lede":"Een zorgvuldig samengestelde selectie internationale springpaarden, van veelbelovende veulens tot wedstrijdrijp talent. Premium kwaliteit, eerlijke begeleiding en wereldwijde service vanuit hartje België.",
+    "hero.cta1":"Bekijk collectie","hero.cta2":"Stel je wensen samen",
+    "meta.horses":"Paarden","meta.horses.s":"in onze database","meta.refs":"Referenties","meta.refs.s":"5* prestaties wereldwijd","meta.years":"Ervaring","meta.years.s":"in topsport & handel",
+    "hor.eyebrow":"Onze collectie","hor.title":"Jumping horses, by year of birth.","hor.desc":"Verken onze uitzonderlijke selectie veelbelovende springpaarden. Filter op geboortejaar."
+  },
+  en:{
+    "nav.horses":"Horses","nav.collection":"Collection","nav.references":"References","nav.stable":"Stables","nav.news":"News","nav.contact":"Contact","nav.findhorse":"Find your horse",
+    "hero.eyebrow":"Belgian Sporthorses · Est. 1995",
+    "hero.l1":"We find you","hero.l2":"your quality horse.",
+    "hero.lede":"A carefully curated selection of international jumping horses, from promising foals to competition-ready talent. Premium quality, honest guidance and worldwide service from the heart of Belgium.",
+    "hero.cta1":"View collection","hero.cta2":"Tell us what you want",
+    "meta.horses":"Horses","meta.horses.s":"in our database","meta.refs":"References","meta.refs.s":"5* results worldwide","meta.years":"Experience","meta.years.s":"in top sport & trade",
+    "hor.eyebrow":"Our collection","hor.title":"Jumping horses, by year of birth.","hor.desc":"Discover our exceptional selection of promising jumping horses. Filter by year of birth."
+  },
+  fr:{
+    "nav.horses":"Chevaux","nav.collection":"Collection","nav.references":"Références","nav.stable":"Écurie","nav.news":"Actualités","nav.contact":"Contact","nav.findhorse":"Trouvez votre cheval",
+    "hero.eyebrow":"Chevaux de sport belges · Depuis 1995",
+    "hero.l1":"Nous vous trouvons","hero.l2":"votre cheval d'exception.",
+    "hero.lede":"Une sélection soignée de chevaux de saut internationaux, du poulain prometteur au talent prêt à concourir. Qualité premium, conseils honnêtes et service mondial depuis le cœur de la Belgique.",
+    "hero.cta1":"Voir la collection","hero.cta2":"Dites-nous ce que vous cherchez",
+    "meta.horses":"Chevaux","meta.horses.s":"dans notre base","meta.refs":"Références","meta.refs.s":"performances 5* mondiales","meta.years":"Expérience","meta.years.s":"sport & commerce",
+    "hor.eyebrow":"Notre collection","hor.title":"Chevaux de saut, par année de naissance.","hor.desc":"Explorez notre sélection exceptionnelle. Filtrez par année."
+  },
+  de:{
+    "nav.horses":"Pferde","nav.collection":"Kollektion","nav.references":"Referenzen","nav.stable":"Stall","nav.news":"News","nav.contact":"Kontakt","nav.findhorse":"Pferd finden",
+    "hero.eyebrow":"Belgische Sportpferde · Seit 1995",
+    "hero.l1":"Wir finden für Sie","hero.l2":"Ihr Qualitätspferd.",
+    "hero.lede":"Eine sorgfältig ausgewählte Kollektion internationaler Springpferde, vom vielversprechenden Fohlen bis zum turnierreifen Talent. Premium-Qualität, ehrliche Beratung und weltweiter Service aus dem Herzen Belgiens.",
+    "hero.cta1":"Kollektion ansehen","hero.cta2":"Sagen Sie uns, was Sie suchen",
+    "meta.horses":"Pferde","meta.horses.s":"in unserer Datenbank","meta.refs":"Referenzen","meta.refs.s":"5* Resultate weltweit","meta.years":"Erfahrung","meta.years.s":"Spitzensport & Handel",
+    "hor.eyebrow":"Unsere Kollektion","hor.title":"Springpferde, nach Geburtsjahr.","hor.desc":"Entdecken Sie unsere außergewöhnliche Auswahl. Filtern Sie nach Geburtsjahr."
+  }
+};
+function setLang(l){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(I18N[l]&&I18N[l][k]) el.textContent=I18N[l][k];
+  });
+  document.querySelectorAll('#langSwitch button').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));
+  document.documentElement.lang=l;
+}
+document.querySelectorAll('#langSwitch button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+
+/* ---------- HORSES grid ---------- */
+let currentYear='all', shown=12;
+function renderHorses(){
+  const g=document.getElementById('horseGrid');
+  let list = currentYear==='all' ? HORSES : (currentYear==='foals' ? HORSES.filter(h=>h.lv==='Foal') : HORSES.filter(h=>String(h.y)===currentYear));
+  const slice = list.slice(0,shown);
+  g.innerHTML = slice.map(h=>`
+    <div class="card">
+      <div class="photo">
+        <img src="${h.img}" alt="${h.n}" loading="lazy">
+        <div class="badge${h.f?' sold':''}">${h.f?'Featured':h.lv}</div>
+      </div>
+      <div class="body">
+        <div class="name">${h.n}</div>
+        <div class="meta"><span>°${h.y}</span><span>${h.sex}</span></div>
+        <div class="pedigree">${h.ped}</div>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('loadMore').style.display = shown>=list.length ? 'none' : 'inline-flex';
+}
+document.querySelectorAll('#yearFilter .chip').forEach(c=>c.addEventListener('click',()=>{
+  document.querySelectorAll('#yearFilter .chip').forEach(x=>x.classList.remove('active'));
+  c.classList.add('active'); currentYear=c.dataset.year; shown=12; renderHorses();
+}));
+document.getElementById('loadMore').addEventListener('click',e=>{e.preventDefault();shown+=12;renderHorses();});
+renderHorses();
+
+/* ---------- REFS ---------- */
+document.getElementById('refsList').innerHTML = REFS.map(r=>`
+  <div class="ref">
+    <div class="img"><img src="${r.img}" alt="${r.n}" loading="lazy"></div>
+    <div class="body">
+      <div class="date">${r.d}</div>
+      <div class="ttl">${r.n}</div>
+      <div class="loc">${r.loc}</div>
+    </div>
+  </div>
+`).join('');
+
+/* ---------- HERO SLIDER ---------- */
+(function(){
+  const slides=document.querySelectorAll('#heroSlider .slide');
+  const dots=document.querySelectorAll('#heroSlider .slider-dots span');
+  const track=document.querySelector('#heroSlider .slides');
+  let i=0, t;
+  function go(n){
+    i=(n+slides.length)%slides.length;
+    track.style.transform=`translateX(-${i*100}%)`;
+    dots.forEach((d,k)=>d.classList.toggle('active',k===i));
+  }
+  function auto(){t=setInterval(()=>go(i+1),5500)}
+  function pause(){clearInterval(t);auto()}
+  document.getElementById('hnx').onclick=()=>{go(i+1);pause()};
+  document.getElementById('hpv').onclick=()=>{go(i-1);pause()};
+  auto();
+})();
+
+/* ---------- FEATURED SLIDER ---------- */
+(function(){
+  const tr=document.getElementById('ftrack');
+  const cards=tr.children;
+  let perView=()=>window.innerWidth<=740?1:(window.innerWidth<=1100?2:3);
+  let i=0;
+  function go(n){
+    const pv=perView();
+    const max=cards.length-pv;
+    i=Math.max(0,Math.min(n,max));
+    const card=cards[0].getBoundingClientRect().width;
+    tr.style.transform=`translateX(-${i*(card+24)}px)`;
+    document.getElementById('fcount').textContent=String(i+1).padStart(2,'0')+' / '+String(cards.length).padStart(2,'0');
+    document.getElementById('fprog').style.width=Math.min(100,((i+pv)/cards.length)*100)+'%';
+  }
+  document.getElementById('fnx').onclick=()=>go(i+1);
+  document.getElementById('fpv').onclick=()=>go(i-1);
+  window.addEventListener('resize',()=>go(0));
+  go(0);
+})();
+
+/* ---------- INTAKE OPTS ---------- */
+document.querySelectorAll('.opts').forEach(box=>{
+  const multi=box.hasAttribute('data-multi');
+  box.querySelectorAll('.opt').forEach(o=>o.addEventListener('click',()=>{
+    if(multi) o.classList.toggle('active');
+    else { box.querySelectorAll('.opt').forEach(x=>x.classList.remove('active')); o.classList.add('active'); }
+  }));
+});
+</script>
+</body>
+</html>

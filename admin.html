@@ -1,0 +1,1061 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>MD Admin — CMS / CRM / ERP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Supabase JS (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Cloudinary upload widget -->
+<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+<style>
+:root{
+  --bg:#FAF7F2;--panel:#fff;--ink:#0A0A0A;--ink-2:#2A2A2A;--muted:#7A7068;
+  --sand:#C9B49A;--sand-soft:#E8DCC8;--sand-deep:#8B7355;--line:#E4DCCC;
+  --ok:#4F8A5E;--warn:#B47B3B;--danger:#A83A3A;
+  --display:'Fraunces',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+  --r:12px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none}
+img{display:block;max-width:100%}
+input,select,textarea{font-family:inherit;font-size:14px;color:var(--ink)}
+
+/* LAYOUT */
+.app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+aside{background:var(--ink);color:#EFE9DC;padding:24px 18px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh}
+.logo{display:flex;align-items:center;gap:12px;padding:6px 10px 22px}
+.logo .m{width:38px;height:38px;border-radius:50%;background:var(--bg);color:var(--ink);display:grid;place-items:center;font-family:var(--display);font-weight:500}
+.logo strong{font-family:var(--display);font-size:18px;font-weight:500;letter-spacing:.01em;display:block}
+.logo span{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(239,233,220,.55);display:block}
+.nav-group{margin-top:18px}
+.nav-group h6{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(239,233,220,.4);margin:14px 12px 6px;font-weight:500}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;font-size:13.5px;color:rgba(239,233,220,.78);transition:.15s;cursor:pointer}
+.nav-item:hover{background:rgba(239,233,220,.05);color:#fff}
+.nav-item.active{background:rgba(239,233,220,.08);color:#fff}
+.nav-item .ic{width:18px;text-align:center;color:var(--sand)}
+.user-card{margin-top:auto;background:rgba(239,233,220,.05);border:1px solid rgba(239,233,220,.08);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px}
+.av{width:36px;height:36px;border-radius:50%;background:var(--sand);color:var(--ink);display:grid;place-items:center;font-weight:600}
+.user-card small{display:block;font-size:11px;color:rgba(239,233,220,.55)}
+
+main{padding:30px 36px 80px;overflow-x:hidden}
+.topnav{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;gap:16px;flex-wrap:wrap}
+.crumbs{font-size:12.5px;color:var(--muted);letter-spacing:.04em}
+.crumbs strong{color:var(--ink);font-weight:500}
+.actions{display:flex;gap:8px;align-items:center}
+.search{position:relative}
+.search input{width:300px;padding:10px 14px 10px 36px;border:1px solid var(--line);border-radius:999px;background:#fff;outline:0}
+.search::before{content:"⌕";position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;font-size:13px;letter-spacing:.04em;font-weight:500;transition:.2s;border:1px solid transparent}
+.btn-p{background:var(--ink);color:var(--bg)}
+.btn-p:hover{background:#1f1f1f}
+.btn-g{background:#fff;border-color:var(--line)}
+.btn-g:hover{background:var(--sand-soft)}
+.btn-d{background:#fff;border-color:var(--danger);color:var(--danger)}
+
+/* HEADER OF PAGE */
+.page-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:26px;flex-wrap:wrap;gap:16px}
+.page-head h1{font-family:var(--display);font-weight:500;font-size:34px;margin:0;letter-spacing:-.01em}
+.page-head .sub{color:var(--muted);font-size:13.5px;margin-top:4px}
+
+/* CARDS */
+.row{display:grid;gap:18px}
+.cols-4{grid-template-columns:repeat(4,1fr)}
+.cols-3{grid-template-columns:repeat(3,1fr)}
+.cols-2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.kpi .l{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.kpi .v{font-family:var(--display);font-size:38px;font-weight:500;margin-top:8px;letter-spacing:-.02em}
+.kpi .delta{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ok);font-weight:500;background:rgba(79,138,94,.1);padding:3px 8px;border-radius:99px;margin-top:6px}
+.kpi .delta.down{color:var(--danger);background:rgba(168,58,58,.1)}
+
+/* TABLE */
+.tbl{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.tbl table{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:14px 16px;border-bottom:1px solid var(--line);background:#FBF8F2}
+.tbl td{padding:14px 16px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tr:hover td{background:#FCFAF5}
+.thumb{width:46px;height:46px;border-radius:8px;object-fit:cover;background:var(--sand-soft);display:inline-block;vertical-align:middle;margin-right:12px}
+.pill{display:inline-flex;align-items:center;padding:4px 10px;border-radius:99px;font-size:11px;letter-spacing:.06em;font-weight:500}
+.pill.ok{background:rgba(79,138,94,.13);color:var(--ok)}
+.pill.warn{background:rgba(180,123,59,.13);color:var(--warn)}
+.pill.danger{background:rgba(168,58,58,.13);color:var(--danger)}
+.pill.muted{background:var(--sand-soft);color:var(--ink-2)}
+.row-actions{display:inline-flex;gap:6px}
+.row-actions button{width:28px;height:28px;border-radius:8px;background:#FBF8F2;color:var(--ink-2);font-size:13px;transition:.2s}
+.row-actions button:hover{background:var(--ink);color:#fff}
+
+/* PAGES */
+.page{display:none}
+.page.active{display:block}
+
+/* FORMS */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.field input,.field select,.field textarea{padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;outline:0;transition:.15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ink)}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:6px;background:var(--sand-soft);color:var(--ink-2);font-size:11.5px;cursor:pointer}
+
+/* MODAL */
+.modal{position:fixed;inset:0;background:rgba(10,10,10,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
+.modal.open{display:flex}
+.modal-inner{background:#fff;border-radius:16px;max-width:760px;width:100%;max-height:90vh;overflow:auto;padding:32px}
+.modal h3{font-family:var(--display);font-weight:500;font-size:24px;margin:0 0 18px}
+.modal .x{position:absolute;top:18px;right:24px;background:#fff;border-radius:50%;width:36px;height:36px}
+
+/* SECTION TABS */
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:22px;overflow-x:auto}
+.tabs button{padding:11px 16px;font-size:13px;color:var(--muted);border-bottom:2px solid transparent;transition:.2s;white-space:nowrap}
+.tabs button.active{color:var(--ink);border-color:var(--ink)}
+
+/* ACTIVITY */
+.activity{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+.activity:last-child{border-bottom:0}
+.activity .ic{width:36px;height:36px;border-radius:50%;background:var(--sand-soft);color:var(--sand-deep);display:grid;place-items:center;flex-shrink:0;font-weight:600;font-family:var(--display)}
+.activity h6{margin:0 0 2px;font-size:13.5px;font-weight:500;color:var(--ink)}
+.activity small{color:var(--muted);font-size:12px}
+
+/* CHART (CSS bars) */
+.bars{display:flex;gap:8px;height:140px;align-items:flex-end;margin-top:16px}
+.bars .bar{flex:1;background:linear-gradient(to top,var(--sand-deep),var(--sand));border-radius:6px 6px 0 0;position:relative;min-height:6px}
+.bars .bar small{position:absolute;left:50%;top:-18px;transform:translateX(-50%);font-size:10px;color:var(--muted)}
+.bars-x{display:flex;gap:8px;margin-top:8px}
+.bars-x span{flex:1;text-align:center;font-size:10.5px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+
+/* DROP ZONE */
+.drop{border:1.5px dashed var(--line);border-radius:12px;padding:30px;text-align:center;color:var(--muted);background:#FBF8F2;cursor:pointer;transition:.2s}
+.drop:hover{border-color:var(--ink);color:var(--ink);background:#fff}
+.drop strong{display:block;font-family:var(--display);font-size:18px;color:var(--ink);margin-bottom:6px}
+
+/* SQL block */
+pre.sql{background:#0A0A0A;color:#EFE9DC;padding:22px;border-radius:12px;font-family:var(--mono);font-size:12.5px;line-height:1.6;overflow:auto;max-height:520px}
+pre.sql .k{color:#C9B49A}
+pre.sql .s{color:#8AB8A0}
+pre.sql .c{color:#6B6B6B;font-style:italic}
+
+.status-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:99px;background:#fff;border:1px solid var(--line);font-size:12px}
+.status-pill .dot{width:8px;height:8px;border-radius:50%;background:var(--danger)}
+.status-pill.connected .dot{background:var(--ok)}
+
+@media (max-width:1000px){
+  .app{grid-template-columns:1fr}
+  aside{position:fixed;top:0;left:-260px;width:248px;transition:.3s;z-index:60}
+  aside.open{left:0}
+  .cols-4{grid-template-columns:repeat(2,1fr)}
+  .cols-3{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="logo">
+      <div class="m">MD</div>
+      <div>
+        <strong>Maarten Driessen</strong>
+        <span>Admin Suite</span>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <h6>CMS</h6>
+      <div class="nav-item active" data-page="dashboard"><span class="ic">◆</span>Dashboard</div>
+      <div class="nav-item" data-page="horses"><span class="ic">♞</span>Paarden</div>
+      <div class="nav-item" data-page="ads"><span class="ic">⬡</span>Advertenties</div>
+      <div class="nav-item" data-page="news"><span class="ic">▤</span>News &amp; updates</div>
+      <div class="nav-item" data-page="references"><span class="ic">★</span>Referenties</div>
+    </div>
+
+    <div class="nav-group">
+      <h6>CRM</h6>
+      <div class="nav-item" data-page="leads"><span class="ic">✎</span>Leads &amp; intakes</div>
+      <div class="nav-item" data-page="customers"><span class="ic">☺</span>Klanten</div>
+      <div class="nav-item" data-page="deals"><span class="ic">▣</span>Deals pipeline</div>
+    </div>
+
+    <div class="nav-group">
+      <h6>ERP</h6>
+      <div class="nav-item" data-page="inventory"><span class="ic">⌂</span>Stallen &amp; voorraad</div>
+      <div class="nav-item" data-page="transport"><span class="ic">⇆</span>Transport &amp; export</div>
+      <div class="nav-item" data-page="staff"><span class="ic">👤</span>Personeel &amp; jobs</div>
+      <div class="nav-item" data-page="finance"><span class="ic">€</span>Financieel</div>
+    </div>
+
+    <div class="nav-group">
+      <h6>Systeem</h6>
+      <div class="nav-item" data-page="settings"><span class="ic">⚙</span>Supabase &amp; Cloudinary</div>
+      <div class="nav-item" data-page="sql"><span class="ic">{}</span>SQL schema</div>
+    </div>
+
+    <div class="user-card">
+      <div class="av">M</div>
+      <div>
+        <div style="color:#fff;font-size:13px;font-weight:500">Maarten Driessen</div>
+        <small>Eigenaar · admin@md.be</small>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+    <div class="topnav">
+      <div class="crumbs">MD Admin / <strong id="crumb">Dashboard</strong></div>
+      <div class="actions">
+        <div class="search"><input placeholder="Zoek paard, klant, lead…"></div>
+        <span class="status-pill" id="statusPill"><span class="dot"></span><span id="statusText">Supabase: niet verbonden</span></span>
+        <button class="btn btn-p" id="primaryAction">+ Nieuw paard</button>
+      </div>
+    </div>
+
+    <!-- ============== DASHBOARD ============== -->
+    <section class="page active" id="page-dashboard">
+      <div class="page-head">
+        <div>
+          <h1>Welcome back, Maarten.</h1>
+          <div class="sub">Een overzicht van de stal — vandaag, deze week en deze maand.</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-g">Deze week</button>
+          <button class="btn btn-g">Deze maand</button>
+          <button class="btn btn-g">Jaar</button>
+        </div>
+      </div>
+
+      <div class="row cols-4">
+        <div class="card kpi"><div class="l">Paarden in stal</div><div class="v">48</div><div class="delta">+3 deze week</div></div>
+        <div class="card kpi"><div class="l">Open leads</div><div class="v">17</div><div class="delta">+5 vandaag</div></div>
+        <div class="card kpi"><div class="l">Sold YTD</div><div class="v">22</div><div class="delta">+18% YoY</div></div>
+        <div class="card kpi"><div class="l">Omzet (€)</div><div class="v">€ 2.4M</div><div class="delta down">-3% vs vorige maand</div></div>
+      </div>
+
+      <div class="row cols-2" style="margin-top:18px">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div>
+              <div class="l" style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)">Verkoop per maand</div>
+              <h3 style="font-family:var(--display);font-weight:500;margin:6px 0 0;font-size:22px">2026 — €  in duizenden</h3>
+            </div>
+            <button class="btn btn-g">Export CSV</button>
+          </div>
+          <div class="bars">
+            <div class="bar" style="height:30%"><small>180</small></div>
+            <div class="bar" style="height:55%"><small>320</small></div>
+            <div class="bar" style="height:70%"><small>410</small></div>
+            <div class="bar" style="height:48%"><small>290</small></div>
+            <div class="bar" style="height:82%"><small>485</small></div>
+            <div class="bar" style="height:64%"><small>380</small></div>
+            <div class="bar" style="height:90%"><small>540</small></div>
+          </div>
+          <div class="bars-x"><span>Jan</span><span>Feb</span><span>Mrt</span><span>Apr</span><span>Mei</span><span>Jun</span><span>Jul</span></div>
+        </div>
+        <div class="card">
+          <div class="l" style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Recente activiteit</div>
+          <h3 style="font-family:var(--display);font-weight:500;margin:0 0 14px;font-size:22px">Vandaag in de stal</h3>
+          <div class="activity"><div class="ic">L</div><div><h6>Nieuwe lead — Sophia Martens (BE)</h6><small>Zoekt 8-9 jaar merrie, ervaring 140cm · 12 min geleden</small></div></div>
+          <div class="activity"><div class="ic">S</div><div><h6>Sold — Snapchat vd Broekkant</h6><small>USA · Ward McClain · vandaag</small></div></div>
+          <div class="activity"><div class="ic">T</div><div><h6>Transport gepland — Oliva Nova</h6><small>3 paarden · vertrek 18 mei · charter "Sky Cargo"</small></div></div>
+          <div class="activity"><div class="ic">F</div><div><h6>Embryo geïmplanteerd</h6><small>Kashmir van 't Schuttershof × Vaberlina</small></div></div>
+          <div class="activity"><div class="ic">N</div><div><h6>News post gepubliceerd</h6><small>Rubel &amp; Morinne 5° in Lier 3* · 1u geleden</small></div></div>
+        </div>
+      </div>
+
+      <div class="row cols-3" style="margin-top:18px">
+        <div class="card">
+          <div class="l" style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)">Top paarden (views)</div>
+          <h3 style="font-family:var(--display);font-weight:500;margin:6px 0 14px;font-size:20px">Deze week</h3>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;font-size:13.5px"><span>Rubel</span><strong>1.214</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:13.5px"><span>Coup de Foudre</span><strong>892</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:13.5px"><span>Charisma vd Broekkant Z</span><strong>761</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:13.5px"><span>Joie de Vigo</span><strong>698</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:13.5px"><span>Picasso JMS Z</span><strong>520</strong></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="l" style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)">Pipeline</div>
+          <h3 style="font-family:var(--display);font-weight:500;margin:6px 0 14px;font-size:20px">Open deals</h3>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between"><span>Qualified</span><span class="pill ok">12</span></div>
+            <div style="display:flex;justify-content:space-between"><span>Bezichtiging</span><span class="pill warn">8</span></div>
+            <div style="display:flex;justify-content:space-between"><span>Veterinair check</span><span class="pill warn">4</span></div>
+            <div style="display:flex;justify-content:space-between"><span>Onderhandeling</span><span class="pill warn">3</span></div>
+            <div style="display:flex;justify-content:space-between"><span>Won</span><span class="pill ok">22</span></div>
+            <div style="display:flex;justify-content:space-between"><span>Lost</span><span class="pill danger">6</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="l" style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)">Stallen</div>
+          <h3 style="font-family:var(--display);font-weight:500;margin:6px 0 14px;font-size:20px">Bezetting</h3>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:13.5px">
+            <div>Indoor Stal A — <strong>12/12</strong> <span class="pill danger">vol</span></div>
+            <div>Outdoor Stal B — <strong>9/14</strong> <span class="pill ok">5 vrij</span></div>
+            <div>Foal Stal — <strong>6/8</strong> <span class="pill warn">2 vrij</span></div>
+            <div>Quarantaine — <strong>2/4</strong> <span class="pill ok">2 vrij</span></div>
+            <div>Walker capacity — <strong>OK</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== HORSES ============== -->
+    <section class="page" id="page-horses">
+      <div class="page-head">
+        <div><h1>Paarden — CMS</h1><div class="sub">Beheer alle paarden, foto's (Cloudinary), video's en publicatie­status.</div></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-g">Importeer CSV</button>
+          <button class="btn btn-p" onclick="openHorseModal()">+ Nieuw paard</button>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="active">Alle (48)</button>
+        <button>Gepubliceerd (41)</button>
+        <button>Concept (5)</button>
+        <button>Sold (22)</button>
+        <button>Foals (4)</button>
+      </div>
+
+      <div class="tbl">
+        <table>
+          <thead><tr>
+            <th></th><th>Naam</th><th>Geb.jaar</th><th>Geslacht</th><th>Pedigree</th><th>Niveau</th><th>Status</th><th>Prijs</th><th></th>
+          </tr></thead>
+          <tbody id="horseTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== ADS ============== -->
+    <section class="page" id="page-ads">
+      <div class="page-head">
+        <div><h1>Advertenties</h1><div class="sub">Externe advertenties (Horsetelex, EHorses, EuroDressage, Facebook) — auto-sync van eigen catalogus.</div></div>
+        <div style="display:flex;gap:8px"><button class="btn btn-p">+ Nieuwe advertentie</button></div>
+      </div>
+      <div class="row cols-4">
+        <div class="card kpi"><div class="l">Live</div><div class="v">27</div><div class="delta">+4 deze week</div></div>
+        <div class="card kpi"><div class="l">Verloopt &lt; 7 dagen</div><div class="v">6</div><div class="delta down">verlengen</div></div>
+        <div class="card kpi"><div class="l">Maandbudget</div><div class="v">€ 1.840</div><div class="delta">68% besteed</div></div>
+        <div class="card kpi"><div class="l">Conversie</div><div class="v">5.8%</div><div class="delta">+0.4%</div></div>
+      </div>
+      <div class="tbl" style="margin-top:18px">
+        <table>
+          <thead><tr><th>Paard</th><th>Platform</th><th>Locatie/regio</th><th>Status</th><th>Views</th><th>Leads</th><th>Eind</th><th></th></tr></thead>
+          <tbody id="adsTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== NEWS ============== -->
+    <section class="page" id="page-news">
+      <div class="page-head">
+        <div><h1>News &amp; updates</h1><div class="sub">Plaats berichten op de publieke site — automatisch in 4 talen via DeepL.</div></div>
+        <div><button class="btn btn-p">+ Nieuwe post</button></div>
+      </div>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Datum</th><th>Titel</th><th>Categorie</th><th>Talen</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>10/05/26</td><td>Rubel &amp; Morinne 5° @ 3* Lier</td><td>Resultaten</td><td>NL · EN · FR · DE</td><td><span class="pill ok">Live</span></td><td><div class="row-actions"><button>✎</button><button>⤡</button></div></td></tr>
+            <tr><td>22/04/26</td><td>Charisma &amp; Emilio Blanco — Bonheiden CSI</td><td>Resultaten</td><td>NL · EN</td><td><span class="pill ok">Live</span></td><td><div class="row-actions"><button>✎</button><button>⤡</button></div></td></tr>
+            <tr><td>08/02/26</td><td>Snapchat vd Broekkant — 2° FEI WEC Ocala</td><td>Resultaten</td><td>NL · EN · FR · DE</td><td><span class="pill ok">Live</span></td><td><div class="row-actions"><button>✎</button><button>⤡</button></div></td></tr>
+            <tr><td>30/06/25</td><td>Coup de Foudre — CWD Ambassador</td><td>Partnerships</td><td>NL · EN · FR</td><td><span class="pill ok">Live</span></td><td><div class="row-actions"><button>✎</button><button>⤡</button></div></td></tr>
+            <tr><td>15/01/26</td><td>Some moments of 2025 (video)</td><td>Showreel</td><td>NL · EN</td><td><span class="pill warn">Concept</span></td><td><div class="row-actions"><button>✎</button><button>⤡</button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== REFERENCES ============== -->
+    <section class="page" id="page-references">
+      <div class="page-head">
+        <div><h1>Referenties</h1><div class="sub">Verkochte paarden die hun verhaal verder schrijven — toon successen op de publieke site.</div></div>
+        <div><button class="btn btn-p">+ Referentie toevoegen</button></div>
+      </div>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Paard</th><th>Resultaat</th><th>Locatie</th><th>Ruiter</th><th>Datum</th><th>Foto</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Curiosa PS</td><td>NEHC Junior 1° &amp; MHC Medal 2°</td><td>Fieldsone Spring (USA)</td><td>—</td><td>05/2026</td><td><span class="pill ok">✓</span></td><td><div class="row-actions"><button>✎</button></div></td></tr>
+            <tr><td>Peyton</td><td>CSI 2*</td><td>Peelbergen (NL)</td><td>—</td><td>04/2026</td><td><span class="pill ok">✓</span></td><td><div class="row-actions"><button>✎</button></div></td></tr>
+            <tr><td>Snapchat vd Broekkant</td><td>2° FEI WEC 2*</td><td>Ocala FL (USA)</td><td>Ward McClain</td><td>02/2026</td><td><span class="pill ok">✓</span></td><td><div class="row-actions"><button>✎</button></div></td></tr>
+            <tr><td>Quickly vh Ijzeren Lindenhof</td><td>Winner 6-Bars</td><td>Doha (UAE)</td><td>—</td><td>02/2026</td><td><span class="pill ok">✓</span></td><td><div class="row-actions"><button>✎</button></div></td></tr>
+            <tr><td>Jup</td><td>Winner London 5* (160)</td><td>London (UK)</td><td>—</td><td>12/2024</td><td><span class="pill ok">✓</span></td><td><div class="row-actions"><button>✎</button></div></td></tr>
+            <tr><td>Joie de Vigo</td><td>CSI 4* tour</td><td>Oliva Nova (ES)</td><td>Ibrahim Barazi</td><td>03/2026</td><td><span class="pill ok">✓</span></td><td><div class="row-actions"><button>✎</button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== LEADS ============== -->
+    <section class="page" id="page-leads">
+      <div class="page-head">
+        <div><h1>Leads &amp; intakes — CRM</h1><div class="sub">Aanvragen via de "What can we do 4 you?"-module en directe contactformulieren.</div></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-g">Export</button>
+          <button class="btn btn-p">+ Manuele lead</button>
+        </div>
+      </div>
+      <div class="row cols-3">
+        <div class="card kpi"><div class="l">Nieuw (vandaag)</div><div class="v">5</div></div>
+        <div class="card kpi"><div class="l">Open</div><div class="v">17</div></div>
+        <div class="card kpi"><div class="l">Conversie last 90d</div><div class="v">22%</div></div>
+      </div>
+      <div class="tbl" style="margin-top:18px">
+        <table>
+          <thead><tr><th>Datum</th><th>Naam</th><th>Land</th><th>Zoekt</th><th>Budget</th><th>Stage</th><th>Owner</th><th></th></tr></thead>
+          <tbody id="leadsTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== CUSTOMERS ============== -->
+    <section class="page" id="page-customers">
+      <div class="page-head">
+        <div><h1>Klanten</h1><div class="sub">Internationale klanten, ruiters en stallen — alle deals en historiek op één plek.</div></div>
+        <div><button class="btn btn-p">+ Klant toevoegen</button></div>
+      </div>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Naam</th><th>Type</th><th>Land</th><th>Aantal deals</th><th>Lifetime value</th><th>Laatste contact</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Ward McClain</td><td>Pro rider</td><td>USA</td><td>4</td><td>€ 480.000</td><td>10/05/26</td><td><div class="row-actions"><button>✎</button></div></td></tr>
+            <tr><td>Ibrahim Barazi</td><td>Owner</td><td>Jordan</td><td>2</td><td>€ 320.000</td><td>03/2026</td><td><div class="row-actions"><button>✎</button></div></td></tr>
+            <tr><td>Johnny Pals</td><td>Pro rider</td><td>NL</td><td>3</td><td>€ 410.000</td><td>11/2025</td><td><div class="row-actions"><button>✎</button></div></td></tr>
+            <tr><td>SencerHorsan Stables</td><td>Stable</td><td>TR</td><td>2</td><td>€ 220.000</td><td>06/2025</td><td><div class="row-actions"><button>✎</button></div></td></tr>
+            <tr><td>Erynn Ballard</td><td>Pro rider</td><td>CAN</td><td>1</td><td>€ 165.000</td><td>03/2026</td><td><div class="row-actions"><button>✎</button></div></td></tr>
+            <tr><td>Eurohorse</td><td>Trader</td><td>BE</td><td>5</td><td>€ 690.000</td><td>11/2025</td><td><div class="row-actions"><button>✎</button></div></td></tr>
+            <tr><td>Mariano Bastida</td><td>Pro rider</td><td>ES</td><td>2</td><td>€ 280.000</td><td>08/2025</td><td><div class="row-actions"><button>✎</button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== DEALS PIPELINE ============== -->
+    <section class="page" id="page-deals">
+      <div class="page-head"><div><h1>Deals pipeline</h1><div class="sub">Kanban-overzicht — sleep deals tussen stages (visueel mockup).</div></div></div>
+      <div class="row cols-4" style="grid-template-columns:repeat(5,1fr)">
+        <div class="card" style="background:#FBF8F2">
+          <div style="display:flex;justify-content:space-between;margin-bottom:12px"><strong style="font-size:12px;letter-spacing:.16em;text-transform:uppercase">Qualified</strong><span class="pill muted">12</span></div>
+          <div class="card" style="padding:14px;margin-bottom:8px"><strong style="font-size:13.5px">Sophia Martens</strong><div style="font-size:12px;color:var(--muted)">Charisma vd Broekkant · €  85k</div></div>
+          <div class="card" style="padding:14px;margin-bottom:8px"><strong style="font-size:13.5px">Hans Müller</strong><div style="font-size:12px;color:var(--muted)">Picasso JMS Z · €  62k</div></div>
+          <div class="card" style="padding:14px"><strong style="font-size:13.5px">Marie Lefèvre</strong><div style="font-size:12px;color:var(--muted)">Bamina · €  48k</div></div>
+        </div>
+        <div class="card" style="background:#FBF8F2">
+          <div style="display:flex;justify-content:space-between;margin-bottom:12px"><strong style="font-size:12px;letter-spacing:.16em;text-transform:uppercase">Bezichtiging</strong><span class="pill warn">8</span></div>
+          <div class="card" style="padding:14px;margin-bottom:8px"><strong style="font-size:13.5px">USA — Riding Center</strong><div style="font-size:12px;color:var(--muted)">Rubel · €  490k</div></div>
+          <div class="card" style="padding:14px"><strong style="font-size:13.5px">Tomás Vargas</strong><div style="font-size:12px;color:var(--muted)">Cusco · €  140k</div></div>
+        </div>
+        <div class="card" style="background:#FBF8F2">
+          <div style="display:flex;justify-content:space-between;margin-bottom:12px"><strong style="font-size:12px;letter-spacing:.16em;text-transform:uppercase">Vet check</strong><span class="pill warn">4</span></div>
+          <div class="card" style="padding:14px;margin-bottom:8px"><strong style="font-size:13.5px">Klaus Bach</strong><div style="font-size:12px;color:var(--muted)">Emilio Blanco PS</div></div>
+        </div>
+        <div class="card" style="background:#FBF8F2">
+          <div style="display:flex;justify-content:space-between;margin-bottom:12px"><strong style="font-size:12px;letter-spacing:.16em;text-transform:uppercase">Onderhandeling</strong><span class="pill warn">3</span></div>
+          <div class="card" style="padding:14px"><strong style="font-size:13.5px">Smith &amp; Co</strong><div style="font-size:12px;color:var(--muted)">Coup de Foudre</div></div>
+        </div>
+        <div class="card" style="background:#FBF8F2">
+          <div style="display:flex;justify-content:space-between;margin-bottom:12px"><strong style="font-size:12px;letter-spacing:.16em;text-transform:uppercase">Won</strong><span class="pill ok">22</span></div>
+          <div class="card" style="padding:14px"><strong style="font-size:13.5px">Ward McClain</strong><div style="font-size:12px;color:var(--muted)">Snapchat — €  165k</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== INVENTORY ============== -->
+    <section class="page" id="page-inventory">
+      <div class="page-head"><div><h1>Stallen &amp; voorraad — ERP</h1><div class="sub">Stalbezetting, voer, hooi, verzorging.</div></div></div>
+      <div class="row cols-2">
+        <div class="card">
+          <h3 style="font-family:var(--display);font-weight:500;margin:0 0 18px;font-size:20px">Stalbezetting</h3>
+          <div class="tbl">
+            <table>
+              <thead><tr><th>Stal</th><th>Bezet</th><th>Capaciteit</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Indoor A</td><td>12</td><td>12</td><td><span class="pill danger">vol</span></td></tr>
+                <tr><td>Indoor B</td><td>9</td><td>14</td><td><span class="pill ok">vrij</span></td></tr>
+                <tr><td>Foal stal</td><td>6</td><td>8</td><td><span class="pill warn">bijna vol</span></td></tr>
+                <tr><td>Quarantaine</td><td>2</td><td>4</td><td><span class="pill ok">vrij</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="font-family:var(--display);font-weight:500;margin:0 0 18px;font-size:20px">Voer &amp; hooi</h3>
+          <div class="tbl">
+            <table>
+              <thead><tr><th>Item</th><th>Voorraad</th><th>Min. niveau</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Krachtvoer Cavalor</td><td>1.240 kg</td><td>500 kg</td><td><span class="pill ok">OK</span></td></tr>
+                <tr><td>Hooi (balen)</td><td>180</td><td>120</td><td><span class="pill ok">OK</span></td></tr>
+                <tr><td>Stro (balen)</td><td>96</td><td>100</td><td><span class="pill warn">bestel bij</span></td></tr>
+                <tr><td>Mineralen mix</td><td>42 kg</td><td>30 kg</td><td><span class="pill ok">OK</span></td></tr>
+                <tr><td>Wormkuur</td><td>8 doses</td><td>20</td><td><span class="pill danger">tekort</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== TRANSPORT ============== -->
+    <section class="page" id="page-transport">
+      <div class="page-head"><div><h1>Transport &amp; export</h1><div class="sub">Wereldwijde leveringen — papieren, charters, quarantaine.</div></div><div><button class="btn btn-p">+ Nieuw transport</button></div></div>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Vertrek</th><th>Paard(en)</th><th>Bestemming</th><th>Charter</th><th>Documenten</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>18/05/26</td><td>Charisma, Bamina, Cusco</td><td>Oliva Nova (ES)</td><td>Sky Cargo</td><td><span class="pill ok">compleet</span></td><td><span class="pill warn">in voorbereiding</span></td></tr>
+            <tr><td>02/06/26</td><td>Pierce</td><td>Wellington, FL (USA)</td><td>Equus Air</td><td><span class="pill warn">vet check open</span></td><td><span class="pill muted">gepland</span></td></tr>
+            <tr><td>05/02/26</td><td>Snapchat</td><td>Ocala, FL (USA)</td><td>Equus Air</td><td><span class="pill ok">compleet</span></td><td><span class="pill ok">geleverd</span></td></tr>
+            <tr><td>14/01/26</td><td>Origi</td><td>Shanghai (CN)</td><td>Cathay Cargo</td><td><span class="pill ok">compleet</span></td><td><span class="pill ok">geleverd</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== STAFF ============== -->
+    <section class="page" id="page-staff">
+      <div class="page-head"><div><h1>Personeel &amp; jobs</h1><div class="sub">Team van de stal — riders, grooms, students.</div></div><div><button class="btn btn-p">+ Job vacature</button></div></div>
+      <div class="row cols-2">
+        <div class="card">
+          <h3 style="font-family:var(--display);font-weight:500;margin:0 0 18px;font-size:20px">Team</h3>
+          <div class="tbl"><table>
+            <thead><tr><th>Naam</th><th>Functie</th><th>Sinds</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Maarten Driessen</td><td>Eigenaar</td><td>1995</td><td><span class="pill ok">actief</span></td></tr>
+              <tr><td>Morinne Donnay</td><td>Head rider</td><td>2021</td><td><span class="pill ok">actief</span></td></tr>
+              <tr><td>L. Vermeulen</td><td>Groom</td><td>2023</td><td><span class="pill ok">actief</span></td></tr>
+              <tr><td>S. Janssens</td><td>Flat rider</td><td>2024</td><td><span class="pill ok">actief</span></td></tr>
+              <tr><td>T. de Smet</td><td>Stagiair</td><td>2025</td><td><span class="pill warn">tijdelijk</span></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="card">
+          <h3 style="font-family:var(--display);font-weight:500;margin:0 0 18px;font-size:20px">Open vacatures (live op /jobs)</h3>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="card" style="padding:14px"><strong>Student</strong><div style="font-size:12px;color:var(--muted)">Flexibel, 2-4 dagen/week</div></div>
+            <div class="card" style="padding:14px"><strong>Fulltime Groom</strong><div style="font-size:12px;color:var(--muted)">Onmiddellijke start</div></div>
+            <div class="card" style="padding:14px"><strong>Flat Rider</strong><div style="font-size:12px;color:var(--muted)">Ervaring jonge paarden</div></div>
+            <div class="card" style="padding:14px"><strong>Mucking Stable Expert</strong><div style="font-size:12px;color:var(--muted)">Fulltime</div></div>
+            <div class="card" style="padding:14px"><strong>Fulltime Rider</strong><div style="font-size:12px;color:var(--muted)">Topsport ervaring vereist</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== FINANCE ============== -->
+    <section class="page" id="page-finance">
+      <div class="page-head"><div><h1>Financieel</h1><div class="sub">Verkopen, facturen, commissies — read-only verbinding met je boekhouding.</div></div></div>
+      <div class="row cols-4">
+        <div class="card kpi"><div class="l">Omzet YTD</div><div class="v">€ 2.4M</div></div>
+        <div class="card kpi"><div class="l">Open facturen</div><div class="v">€ 168k</div></div>
+        <div class="card kpi"><div class="l">Commissies betaald</div><div class="v">€ 92k</div></div>
+        <div class="card kpi"><div class="l">Marge</div><div class="v">31%</div></div>
+      </div>
+      <div class="card" style="margin-top:18px">
+        <h3 style="font-family:var(--display);font-weight:500;font-size:20px;margin:0 0 14px">Recente verkopen</h3>
+        <div class="tbl"><table>
+          <thead><tr><th>Datum</th><th>Paard</th><th>Klant</th><th>Bedrag</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>05/05/26</td><td>Snapchat vd Broekkant</td><td>Ward McClain (USA)</td><td>€ 165.000</td><td><span class="pill ok">betaald</span></td></tr>
+            <tr><td>22/04/26</td><td>Petit</td><td>Smith & Co (UK)</td><td>€ 82.000</td><td><span class="pill ok">betaald</span></td></tr>
+            <tr><td>14/02/26</td><td>Joie de Vigo (commission)</td><td>Ibrahim Barazi (JOR)</td><td>€ 38.000</td><td><span class="pill warn">deels</span></td></tr>
+            <tr><td>10/01/26</td><td>Origi (commission)</td><td>Shanghai Stables (CN)</td><td>€ 24.000</td><td><span class="pill ok">betaald</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </section>
+
+    <!-- ============== SETTINGS ============== -->
+    <section class="page" id="page-settings">
+      <div class="page-head"><div><h1>Instellingen</h1><div class="sub">Verbind Supabase &amp; Cloudinary — je gegevens worden lokaal opgeslagen.</div></div></div>
+
+      <div class="row cols-2">
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <svg width="28" height="28" viewBox="0 0 109 113" fill="none"><path d="M63.7 110.3c-3 3.7-9 1.7-9-3.2L52.6 64h36c6.5 0 10.2 7.6 6 12.5l-30.9 33.8z" fill="#3ECF8E"/><path d="M45.3 2.6c3-3.8 9-1.7 9 3.1l1 43.2h-36c-6.5 0-10.1-7.6-6-12.6L45.3 2.6z" fill="#3ECF8E" opacity=".4"/></svg>
+            <h3 style="font-family:var(--display);font-weight:500;font-size:22px;margin:0">Supabase</h3>
+          </div>
+          <p style="color:var(--muted);font-size:13px;margin:0 0 18px">Je SQL backend, auth en realtime. Plak je project URL en anon key — we slaan ze enkel in je browser op (localStorage).</p>
+          <div class="field" style="margin-bottom:10px"><label>Project URL</label><input id="sb-url" placeholder="https://xxx.supabase.co"></div>
+          <div class="field" style="margin-bottom:10px"><label>Anon (public) key</label><input id="sb-key" placeholder="eyJhbGciOi…"></div>
+          <div class="field" style="margin-bottom:14px"><label>Default schema</label><input id="sb-schema" placeholder="public" value="public"></div>
+          <div style="display:flex;gap:8px"><button class="btn btn-p" onclick="connectSupabase()">Verbinden &amp; test</button><button class="btn btn-g" onclick="loadSeedData()">Laad demo-paarden in Supabase</button></div>
+          <div id="sb-msg" style="margin-top:14px;font-size:13px;color:var(--muted)"></div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <svg width="28" height="28" viewBox="0 0 32 32"><path d="M22.7 11.3c-.7-2.7-3-4.7-5.8-5C15.5 4 13 4.7 11.5 6.5 9.8 5.5 7.5 5.8 6 7.2 4.4 8.6 4 11 5 12.8c-1.5.5-2.6 2-2.6 3.7 0 2.2 1.8 4 4 4h15c2.5 0 4.6-2 4.6-4.5 0-2.3-1.7-4.2-3.9-4.5z" fill="#3448C5"/></svg>
+            <h3 style="font-family:var(--display);font-weight:500;font-size:22px;margin:0">Cloudinary</h3>
+          </div>
+          <p style="color:var(--muted);font-size:13px;margin:0 0 18px">Je media library voor foto's en video's. Geef cloud name &amp; een unsigned upload preset — klanten kunnen dan direct foto's uploaden.</p>
+          <div class="field" style="margin-bottom:10px"><label>Cloud name</label><input id="cl-cloud" placeholder="maartendriessen"></div>
+          <div class="field" style="margin-bottom:10px"><label>Unsigned upload preset</label><input id="cl-preset" placeholder="md_horses"></div>
+          <div class="field" style="margin-bottom:14px"><label>Default folder</label><input id="cl-folder" placeholder="horses" value="horses"></div>
+          <div style="display:flex;gap:8px"><button class="btn btn-p" onclick="openCloudinaryWidget()">Open upload widget</button><button class="btn btn-g" onclick="saveCloudinary()">Bewaren</button></div>
+          <div id="cl-msg" style="margin-top:14px;font-size:13px;color:var(--muted)"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <h3 style="font-family:var(--display);font-weight:500;font-size:20px;margin:0 0 14px">Andere koppelingen</h3>
+        <div class="row cols-4">
+          <div class="card" style="padding:18px"><strong>DeepL API</strong><div style="font-size:12px;color:var(--muted);margin:6px 0 10px">Auto-vertaling NL → EN/FR/DE</div><button class="btn btn-g" style="padding:6px 14px">Koppel</button></div>
+          <div class="card" style="padding:18px"><strong>Stripe</strong><div style="font-size:12px;color:var(--muted);margin:6px 0 10px">Reserveringen &amp; deposits</div><button class="btn btn-g" style="padding:6px 14px">Koppel</button></div>
+          <div class="card" style="padding:18px"><strong>Mailgun</strong><div style="font-size:12px;color:var(--muted);margin:6px 0 10px">Transactionele mails</div><button class="btn btn-g" style="padding:6px 14px">Koppel</button></div>
+          <div class="card" style="padding:18px"><strong>Horsetelex</strong><div style="font-size:12px;color:var(--muted);margin:6px 0 10px">Pedigree lookup</div><button class="btn btn-g" style="padding:6px 14px">Koppel</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SQL ============== -->
+    <section class="page" id="page-sql">
+      <div class="page-head"><div><h1>SQL schema</h1><div class="sub">Bootstrap script voor Supabase — run dit in de SQL editor om de volledige database in één keer op te zetten.</div></div>
+        <div><button class="btn btn-p" onclick="copySQL()">Kopieer SQL</button></div>
+      </div>
+      <pre class="sql" id="sqlBlock"></pre>
+    </section>
+
+  </main>
+</div>
+
+<!-- HORSE MODAL -->
+<div class="modal" id="horseModal">
+  <div class="modal-inner" style="position:relative">
+    <button class="x" onclick="closeHorseModal()">✕</button>
+    <h3>Nieuw paard toevoegen</h3>
+    <div class="tabs">
+      <button class="active">Basis</button>
+      <button>Pedigree</button>
+      <button>Media</button>
+      <button>Prijs &amp; status</button>
+      <button>Vertalingen</button>
+    </div>
+    <div class="form-row">
+      <div class="field"><label>Naam</label><input placeholder="bv. Rubel"></div>
+      <div class="field"><label>Geslacht</label><select><option>Hengst</option><option>Merrie</option><option>Ruin</option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="field"><label>Geboortejaar</label><input type="number" placeholder="2020"></div>
+      <div class="field"><label>Kleur</label><select><option>Bay</option><option>Zwart</option><option>Bruin</option><option>Schimmel</option><option>Vos</option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="field"><label>Stokmaat (cm)</label><input type="number" placeholder="168"></div>
+      <div class="field"><label>Niveau</label><select><option>Foal</option><option>Young horse</option><option>4yo</option><option>5yo</option><option>6yo</option><option>1.30m</option><option>1.40m</option><option>1.50m</option><option>1.60m</option></select></div>
+    </div>
+    <div class="field" style="margin-bottom:14px"><label>Pedigree (vader × moeder × moedersvader)</label><input placeholder="Catoki × Clearway × Capitol I"></div>
+    <div class="field" style="margin-bottom:14px"><label>Beschrijving</label><textarea rows="4" placeholder="Korte beschrijving voor de publieke site…"></textarea></div>
+
+    <div class="drop" onclick="openCloudinaryWidget()">
+      <strong>Upload foto's &amp; video</strong>
+      Klik om de Cloudinary upload widget te openen — drag &amp; drop, video, of importeer uit Google Drive
+    </div>
+
+    <div style="margin-top:22px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:18px">
+      <div style="font-size:12.5px;color:var(--muted)">Tip: vul Cloudinary-keys in onder Instellingen om upload te activeren.</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-g" onclick="closeHorseModal()">Annuleren</button>
+        <button class="btn btn-p" onclick="saveHorse()">Opslaan in Supabase</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== Demo data ===== */
+const HORSES=[
+  {n:"Rubel",y:2017,s:"Mare",p:"Quint vh Maarlo × Nevado vd Rostal",lv:"1.60m",st:"published",pr:"€ 490.000",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/rubel-44-high-zm7mao.jpg?enable-io=true&fit=bounds&width=200"},
+  {n:"Charisma vd Broekkant Z",y:2017,s:"Mare",p:"Cicero van Paemel Z × Cornet Obolensky",lv:"1.50m",st:"published",pr:"€ 85.000",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/image-standard-gllnhb.png?enable-io=true&fit=bounds&width=200"},
+  {n:"Coup de Foudre",y:2019,s:"Gelding",p:"CWD ambassador horse",lv:"1.45m",st:"published",pr:"On request",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/coup-de-foudre-high-sdm922.png?enable-io=true&fit=bounds&width=200"},
+  {n:"Picasso JMS Z",y:2022,s:"Stallion",p:"Pegase × Cancara Z",lv:"Young",st:"published",pr:"€ 62.000",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/picasso-11b-high.jpg?enable-io=true&fit=bounds&width=200"},
+  {n:"Cognac van 't Breezerhof Z",y:2024,s:"Stallion",p:"Comilfaut × Indiangold",lv:"Foal",st:"draft",pr:"On request",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/cognac-1-high-xdte85.jpg?enable-io=true&fit=bounds&width=200"},
+  {n:"Bamina",y:2020,s:"Mare",p:"Bamako de Muze × Kannan",lv:"5yo",st:"published",pr:"€ 48.000",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/horsepicfree-3.jpg"},
+  {n:"Uricane Hero",y:2019,s:"Gelding",p:"Uricas × _ _ (Linotte/Femke P)",lv:"6yo",st:"published",pr:"€ 95.000",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/uricane-13-high.jpg?enable-io=true&fit=bounds&width=200"},
+  {n:"Catobelleau DBH Z",y:2023,s:"Stallion",p:"Catoki × Clearway",lv:"Young",st:"draft",pr:"On request",img:"https://primary.jwwb.nl/public/x/u/l/temp-exgfvmevdfqypkiyhati/catobelleau-12-high-ii8wh8.jpg?enable-io=true&fit=bounds&width=200"},
+];
+const ADS=[
+  {h:"Rubel",pl:"Horsetelex",r:"Internationaal",st:"live",v:"4.210",l:"18",e:"21/06"},
+  {h:"Charisma vd Broekkant Z",pl:"EHorses",r:"DACH",st:"live",v:"2.180",l:"9",e:"30/05"},
+  {h:"Coup de Foudre",pl:"Facebook Ads",r:"USA · Europe",st:"live",v:"12.640",l:"24",e:"15/06"},
+  {h:"Picasso JMS Z",pl:"Horsetelex",r:"Internationaal",st:"live",v:"1.420",l:"7",e:"19/05"},
+  {h:"Bamina",pl:"EuroDressage",r:"BNL",st:"draft",v:"—",l:"—",e:"—"},
+  {h:"Uricane Hero",pl:"EHorses",r:"Internationaal",st:"live",v:"3.620",l:"11",e:"08/06"},
+];
+const LEADS=[
+  {d:"17/05/26",n:"Sophia Martens",c:"BE",zk:"Merrie 8-9j, 140cm",b:"€ 60-120k",st:"new",o:"Maarten"},
+  {d:"17/05/26",n:"Hans Müller",c:"DE",zk:"Hengst 5-6j, 130cm",b:"€ 30-60k",st:"new",o:"—"},
+  {d:"16/05/26",n:"Tomás Vargas",c:"MX",zk:"Cusco — bezichtiging",b:"€ 120k+",st:"qualified",o:"Maarten"},
+  {d:"15/05/26",n:"Eva Rossi",c:"IT",zk:"Junior horse, ruin",b:"€ 30-60k",st:"qualified",o:"Morinne"},
+  {d:"15/05/26",n:"Ward McClain",c:"USA",zk:"3 jonge paarden",b:"€ 200k+",st:"negotiation",o:"Maarten"},
+  {d:"14/05/26",n:"K. Bach",c:"DE",zk:"Emilio Blanco PS — vet",b:"€ 60-120k",st:"vet",o:"Morinne"},
+];
+
+/* render tables */
+document.getElementById('horseTable').innerHTML=HORSES.map(h=>`
+  <tr>
+    <td><img src="${h.img}" class="thumb" loading="lazy"></td>
+    <td><strong>${h.n}</strong></td><td>°${h.y}</td><td>${h.s}</td>
+    <td style="color:var(--muted);font-style:italic;font-family:var(--display)">${h.p}</td>
+    <td>${h.lv}</td>
+    <td>${h.st==='published'?'<span class="pill ok">live</span>':'<span class="pill warn">concept</span>'}</td>
+    <td>${h.pr}</td>
+    <td><div class="row-actions"><button title="Bekijk">👁</button><button title="Bewerk">✎</button><button title="Verwijder">×</button></div></td>
+  </tr>`).join('');
+
+document.getElementById('adsTable').innerHTML=ADS.map(a=>`
+  <tr>
+    <td><strong>${a.h}</strong></td><td>${a.pl}</td><td>${a.r}</td>
+    <td>${a.st==='live'?'<span class="pill ok">live</span>':'<span class="pill warn">concept</span>'}</td>
+    <td>${a.v}</td><td>${a.l}</td><td>${a.e}</td>
+    <td><div class="row-actions"><button>✎</button><button>×</button></div></td>
+  </tr>`).join('');
+
+document.getElementById('leadsTable').innerHTML=LEADS.map(l=>{
+  const pillMap={new:'<span class="pill ok">nieuw</span>',qualified:'<span class="pill warn">qualified</span>',vet:'<span class="pill warn">vet check</span>',negotiation:'<span class="pill warn">onderhandeling</span>'};
+  return `<tr><td>${l.d}</td><td><strong>${l.n}</strong></td><td>${l.c}</td><td>${l.zk}</td><td>${l.b}</td><td>${pillMap[l.st]}</td><td>${l.o}</td><td><div class="row-actions"><button>✎</button><button>→</button></div></td></tr>`;
+}).join('');
+
+/* nav */
+document.querySelectorAll('.nav-item').forEach(it=>it.addEventListener('click',()=>{
+  document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+  it.classList.add('active');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const id='page-'+it.dataset.page;
+  document.getElementById(id).classList.add('active');
+  document.getElementById('crumb').textContent=it.textContent.trim();
+  document.getElementById('primaryAction').style.display = it.dataset.page==='horses'||it.dataset.page==='dashboard' ? 'inline-flex':'none';
+}));
+
+/* modal */
+function openHorseModal(){document.getElementById('horseModal').classList.add('open')}
+function closeHorseModal(){document.getElementById('horseModal').classList.remove('open')}
+document.getElementById('primaryAction').onclick=openHorseModal;
+
+/* ===== SUPABASE ===== */
+let supa=null;
+function connectSupabase(){
+  const url=document.getElementById('sb-url').value.trim();
+  const key=document.getElementById('sb-key').value.trim();
+  const sch=document.getElementById('sb-schema').value.trim()||'public';
+  if(!url||!key){msg('sb-msg','Vul eerst URL en anon key in.','danger');return}
+  try{
+    supa=window.supabase.createClient(url,key,{db:{schema:sch}});
+    localStorage.setItem('md.sb',JSON.stringify({url,key,sch}));
+    msg('sb-msg','✓ Client aangemaakt. We pingen je database…','ok');
+    // simpele probe — leest 1 row uit een (mogelijk nog niet bestaande) tabel; we gebruiken auth om geldigheid te checken
+    supa.from('horses').select('id',{count:'exact',head:true}).then(({error,count})=>{
+      if(error&&error.code==='42P01'){msg('sb-msg','✓ Verbonden. Tabellen ontbreken nog — run SQL schema.','warn');setStatus(true,'Supabase: verbonden (schema vereist)')}
+      else if(error){msg('sb-msg','Verbonden, maar query faalde: '+error.message,'warn');setStatus(true,'Supabase: verbonden')}
+      else{msg('sb-msg','✓ Verbonden — '+(count||0)+' paarden in DB','ok');setStatus(true,'Supabase: verbonden')}
+    });
+  }catch(e){msg('sb-msg','Fout: '+e.message,'danger')}
+}
+function loadSeedData(){
+  if(!supa){msg('sb-msg','Verbind eerst.','warn');return}
+  const rows=HORSES.map(h=>({name:h.n,year:h.y,sex:h.s,pedigree:h.p,level:h.lv,status:h.st,price:h.pr,cover_url:h.img}));
+  supa.from('horses').insert(rows).then(({error})=>{
+    if(error)msg('sb-msg','Seed faalde: '+error.message,'danger');
+    else msg('sb-msg','✓ '+rows.length+' demo-paarden ingeladen.','ok');
+  });
+}
+function msg(id,t,k){const e=document.getElementById(id);e.textContent=t;e.style.color = k==='danger'?'var(--danger)':k==='ok'?'var(--ok)':k==='warn'?'var(--warn)':'var(--muted)';}
+function setStatus(c,t){const p=document.getElementById('statusPill');p.classList.toggle('connected',c);document.getElementById('statusText').textContent=t}
+
+/* ===== CLOUDINARY ===== */
+let cloudConf={};
+function saveCloudinary(){
+  cloudConf={cloud:document.getElementById('cl-cloud').value.trim(),preset:document.getElementById('cl-preset').value.trim(),folder:document.getElementById('cl-folder').value.trim()};
+  localStorage.setItem('md.cl',JSON.stringify(cloudConf));
+  msg('cl-msg','✓ Bewaard.','ok');
+}
+function openCloudinaryWidget(){
+  if(!cloudConf.cloud){const raw=localStorage.getItem('md.cl');if(raw)cloudConf=JSON.parse(raw)}
+  if(!cloudConf.cloud||!cloudConf.preset){alert('Vul eerst Cloud name en Upload preset in onder Instellingen.');document.querySelector('[data-page=settings]').click();return}
+  if(!window.cloudinary){alert('Cloudinary widget niet geladen.');return}
+  window.cloudinary.createUploadWidget({cloudName:cloudConf.cloud,uploadPreset:cloudConf.preset,folder:cloudConf.folder||'horses',sources:['local','url','camera','dropbox','google_drive'],multiple:true,maxFiles:20},(err,res)=>{
+    if(!err&&res&&res.event==='success'){
+      console.log('Uploaded:',res.info.secure_url);
+      msg('cl-msg','✓ Geüpload: '+res.info.original_filename,'ok');
+    }
+  }).open();
+}
+function saveHorse(){
+  if(!supa){alert('Verbind eerst Supabase onder Instellingen.');return}
+  alert('Paard wordt opgeslagen in Supabase.');
+  closeHorseModal();
+}
+
+/* restore */
+(function(){
+  const sb=localStorage.getItem('md.sb');if(sb){const j=JSON.parse(sb);document.getElementById('sb-url').value=j.url;document.getElementById('sb-key').value=j.key;document.getElementById('sb-schema').value=j.sch||'public'}
+  const cl=localStorage.getItem('md.cl');if(cl){const j=JSON.parse(cl);cloudConf=j;document.getElementById('cl-cloud').value=j.cloud||'';document.getElementById('cl-preset').value=j.preset||'';document.getElementById('cl-folder').value=j.folder||'horses'}
+})();
+
+/* SQL schema */
+const SQL=`-- ===========================================================
+-- Maarten Driessen Sporthorses — Supabase SQL bootstrap
+-- Run this in Supabase → SQL Editor → New query
+-- ===========================================================
+
+-- Extensions
+create extension if not exists "pgcrypto";
+create extension if not exists "uuid-ossp";
+
+-- ===== Lookup enums =====
+create type sex_t as enum ('Stallion','Mare','Gelding');
+create type horse_status_t as enum ('draft','published','reserved','sold','archived');
+create type lead_stage_t as enum ('new','qualified','viewing','vet','negotiation','won','lost');
+
+-- ===== Horses =====
+create table if not exists horses (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null default '',
+  name text not null,
+  year int not null,
+  sex sex_t not null,
+  color text,
+  height_cm int,
+  level text,
+  pedigree text,
+  description_nl text,
+  description_en text,
+  description_fr text,
+  description_de text,
+  price_eur numeric,
+  price_label text,                              -- 'On request' etc.
+  status horse_status_t not null default 'draft',
+  cover_url text,                                -- Cloudinary URL
+  video_url text,
+  featured boolean default false,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+create index on horses (status);
+create index on horses (year);
+
+-- ===== Media (Cloudinary public_ids + secure_url) =====
+create table if not exists media (
+  id uuid primary key default gen_random_uuid(),
+  horse_id uuid references horses(id) on delete cascade,
+  public_id text not null,                       -- Cloudinary id
+  secure_url text not null,
+  resource_type text default 'image',            -- image | video
+  width int, height int,
+  position int default 0,
+  created_at timestamptz default now()
+);
+
+-- ===== Customers =====
+create table if not exists customers (
+  id uuid primary key default gen_random_uuid(),
+  full_name text not null,
+  email text,
+  phone text,
+  country text,
+  type text,                                     -- pro_rider | owner | stable | trader
+  notes text,
+  lifetime_value_eur numeric default 0,
+  created_at timestamptz default now()
+);
+
+-- ===== Leads (intake form) =====
+create table if not exists leads (
+  id uuid primary key default gen_random_uuid(),
+  full_name text,
+  email text,
+  phone text,
+  country text,
+  sex_preferences text[],                        -- multi
+  age_range text,
+  experience_level text,
+  preferred_colors text[],
+  budget_range text,
+  remarks text,
+  stage lead_stage_t not null default 'new',
+  owner text,
+  customer_id uuid references customers(id) on delete set null,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- ===== Deals pipeline =====
+create table if not exists deals (
+  id uuid primary key default gen_random_uuid(),
+  horse_id uuid references horses(id) on delete set null,
+  customer_id uuid references customers(id) on delete set null,
+  stage lead_stage_t not null default 'qualified',
+  amount_eur numeric,
+  commission_eur numeric,
+  expected_close date,
+  closed_at timestamptz,
+  created_at timestamptz default now()
+);
+
+-- ===== Advertisements =====
+create table if not exists ads (
+  id uuid primary key default gen_random_uuid(),
+  horse_id uuid references horses(id) on delete cascade,
+  platform text not null,                        -- horsetelex | ehorses | fb | eurodressage
+  region text,
+  status text default 'live',                    -- live | draft | expired
+  views int default 0,
+  leads int default 0,
+  starts_on date,
+  ends_on date,
+  budget_eur numeric,
+  created_at timestamptz default now()
+);
+
+-- ===== News / posts =====
+create table if not exists news (
+  id uuid primary key default gen_random_uuid(),
+  title_nl text, title_en text, title_fr text, title_de text,
+  body_nl text, body_en text, body_fr text, body_de text,
+  cover_url text,
+  category text,
+  published boolean default false,
+  published_at timestamptz,
+  created_at timestamptz default now()
+);
+
+-- ===== References (sold horses' results) =====
+create table if not exists "references" (
+  id uuid primary key default gen_random_uuid(),
+  horse_name text not null,
+  result text,
+  location text,
+  rider text,
+  event_date date,
+  cover_url text,
+  video_url text,
+  created_at timestamptz default now()
+);
+
+-- ===== Stables / inventory =====
+create table if not exists stables (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  capacity int default 0,
+  occupied int default 0
+);
+create table if not exists inventory_items (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  unit text,
+  stock numeric default 0,
+  min_level numeric default 0,
+  updated_at timestamptz default now()
+);
+
+-- ===== Transports / export =====
+create table if not exists transports (
+  id uuid primary key default gen_random_uuid(),
+  departure_date date not null,
+  destination text,
+  charter text,
+  documents_ok boolean default false,
+  status text default 'planned',                 -- planned | in_progress | delivered
+  notes text,
+  created_at timestamptz default now()
+);
+create table if not exists transport_horses (
+  transport_id uuid references transports(id) on delete cascade,
+  horse_id uuid references horses(id) on delete cascade,
+  primary key (transport_id, horse_id)
+);
+
+-- ===== Staff & jobs =====
+create table if not exists staff (
+  id uuid primary key default gen_random_uuid(),
+  full_name text not null,
+  role text,
+  since date,
+  status text default 'active'
+);
+create table if not exists jobs (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  description text,
+  active boolean default true,
+  created_at timestamptz default now()
+);
+
+-- ===== RLS (Row Level Security) =====
+alter table horses enable row level security;
+alter table leads enable row level security;
+alter table customers enable row level security;
+alter table deals enable row level security;
+alter table ads enable row level security;
+alter table news enable row level security;
+alter table "references" enable row level security;
+
+-- Public can read published horses, news and references
+create policy "horses_public_read" on horses
+  for select using (status = 'published');
+create policy "news_public_read" on news
+  for select using (published = true);
+create policy "references_public_read" on "references"
+  for select using (true);
+
+-- Public can submit a lead (insert only)
+create policy "leads_public_insert" on leads
+  for insert with check (true);
+
+-- Authenticated users can do anything
+create policy "auth_all_horses" on horses for all
+  using (auth.role() = 'authenticated')
+  with check (auth.role() = 'authenticated');
+create policy "auth_all_leads" on leads for all
+  using (auth.role() = 'authenticated')
+  with check (auth.role() = 'authenticated');
+create policy "auth_all_customers" on customers for all
+  using (auth.role() = 'authenticated')
+  with check (auth.role() = 'authenticated');
+create policy "auth_all_deals" on deals for all
+  using (auth.role() = 'authenticated')
+  with check (auth.role() = 'authenticated');
+create policy "auth_all_ads" on ads for all
+  using (auth.role() = 'authenticated')
+  with check (auth.role() = 'authenticated');
+create policy "auth_all_news" on news for all
+  using (auth.role() = 'authenticated')
+  with check (auth.role() = 'authenticated');
+create policy "auth_all_refs" on "references" for all
+  using (auth.role() = 'authenticated')
+  with check (auth.role() = 'authenticated');
+
+-- ===== Triggers =====
+create or replace function set_updated_at()
+returns trigger language plpgsql as $$
+begin new.updated_at = now(); return new; end;
+$$;
+create trigger trg_horses_upd before update on horses
+  for each row execute procedure set_updated_at();
+create trigger trg_leads_upd before update on leads
+  for each row execute procedure set_updated_at();
+
+-- ===== Useful view =====
+create or replace view v_public_horses as
+  select id, slug, name, year, sex, level, pedigree, cover_url,
+         coalesce(description_nl, description_en) as description,
+         price_label, featured
+  from horses
+  where status = 'published'
+  order by featured desc, year desc;
+
+-- DONE — happy riding!
+`;
+document.getElementById('sqlBlock').textContent=SQL;
+function copySQL(){navigator.clipboard.writeText(SQL).then(()=>alert('SQL gekopieerd — plak in Supabase → SQL Editor.'))}
+</script>
+</body>
+</html>

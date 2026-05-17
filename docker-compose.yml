@@ -1,0 +1,71 @@
+# =====================================================================
+#  Maarten Driessen Sporthorses — Local development stack
+#  Postgres 16 + PgAdmin 4 + (optioneel) Supabase Studio
+#
+#  Usage:
+#    docker compose up -d         # start
+#    docker compose logs -f       # tail logs
+#    docker compose down -v       # stop + wipe data
+#
+#  Het master SQL schema wordt automatisch ingeladen vanuit
+#  ./supabase-schema.sql bij de eerste boot.
+# =====================================================================
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: md_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER:     ${POSTGRES_USER:-md}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-md_secret}
+      POSTGRES_DB:       ${POSTGRES_DB:-md_horses}
+      TZ:                Europe/Brussels
+    ports:
+      - "5432:5432"
+    volumes:
+      - md_pgdata:/var/lib/postgresql/data
+      - ./supabase-schema.sql:/docker-entrypoint-initdb.d/00_schema.sql:ro
+    healthcheck:
+      test:     ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout:  5s
+      retries:  10
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: md_pgadmin
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGADMIN_DEFAULT_EMAIL:    ${PGADMIN_EMAIL:-admin@md.be}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-md_secret}
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    ports:
+      - "5050:80"
+    volumes:
+      - md_pgadmin:/var/lib/pgadmin
+
+  # Optioneel — lichte REST-laag bovenop Postgres (Supabase-compatible).
+  # Met PostgREST krijg je dezelfde API als Supabase (zelfde endpoints),
+  # zodat admin.html / index.html zonder code-wijzigingen werken.
+  postgrest:
+    image: postgrest/postgrest:latest
+    container_name: md_rest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGRST_DB_URI:        postgres://${POSTGRES_USER:-md}:${POSTGRES_PASSWORD:-md_secret}@db:5432/${POSTGRES_DB:-md_horses}
+      PGRST_DB_SCHEMA:     public
+      PGRST_DB_ANON_ROLE:  ${POSTGRES_USER:-md}
+      PGRST_OPENAPI_SERVER_PROXY_URI: http://localhost:3000
+    ports:
+      - "3000:3000"
+
+volumes:
+  md_pgdata:
+  md_pgadmin:
