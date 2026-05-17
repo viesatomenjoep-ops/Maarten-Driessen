@@ -20,7 +20,7 @@
   --r:12px;
 }
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;-webkit-font-smoothing:antialiased}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;-webkit-font-smoothing:antialiased;overflow-x:hidden;max-width:100vw}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:0;background:none}
 img{display:block;max-width:100%}
@@ -148,6 +148,13 @@ pre.sql .c{color:#6B6B6B;font-style:italic}
   .app{grid-template-columns:1fr}
   aside{position:fixed;top:0;left:-260px;width:248px;transition:.3s;z-index:60}
   aside.open{left:0}
+
+  #adminMenuToggle{display:block !important;}
+  .actions{justify-content:flex-start;}
+  .search input{width:100% !important;}
+  .search{width:100%;margin-bottom:12px}
+  .status-pill{margin-bottom:12px}
+
   .cols-4{grid-template-columns:repeat(2,1fr)}
   .cols-3{grid-template-columns:repeat(2,1fr)}
 }
@@ -157,6 +164,7 @@ pre.sql .c{color:#6B6B6B;font-style:italic}
 
 <div class="app">
   <!-- SIDEBAR -->
+  <div id="adminOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:50;"></div>
   <aside>
     <div class="logo">
       <img src="logo.png" alt="MD Logo" style="height: 38px; width: auto;" />
@@ -208,6 +216,7 @@ pre.sql .c{color:#6B6B6B;font-style:italic}
   <!-- MAIN -->
   <main>
     <div class="topnav">
+            <button id="adminMenuToggle" style="display:none;font-size:24px;color:var(--ink);margin-right:12px;background:none;border:none">≡</button>
       <div class="crumbs"><span data-i18n="ad.admin">MD Admin</span> / <strong id="crumb" data-i18n="ad.nav.dash">Dashboard</strong></div>
       <div class="actions">
         <div id="langSwitchAdmin" style="display:flex;gap:4px;margin-right:12px"><button data-lang="nl" class="active">NL</button><button data-lang="en">EN</button><button data-lang="fr">FR</button><button data-lang="de">DE</button></div>
@@ -1208,5 +1217,31 @@ function setLangAdmin(l) {
 }
 document.querySelectorAll('#langSwitchAdmin button').forEach(b => b.addEventListener('click', () => setLangAdmin(b.dataset.lang)));
 </script>
+
+<script>
+const adToggle = document.getElementById('adminMenuToggle');
+const adAside = document.querySelector('aside');
+const adOverlay = document.getElementById('adminOverlay');
+if(adToggle){
+  adToggle.addEventListener('click', () => {
+    adAside.classList.add('open');
+    adOverlay.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  });
+  adOverlay.addEventListener('click', () => {
+    adAside.classList.remove('open');
+    adOverlay.style.display = 'none';
+    document.body.style.overflow = '';
+  });
+  document.querySelectorAll('.nav-item').forEach(n => {
+    n.addEventListener('click', () => {
+      adAside.classList.remove('open');
+      adOverlay.style.display = 'none';
+      document.body.style.overflow = '';
+    });
+  });
+}
+</script>
 </body>
+
 </html>
