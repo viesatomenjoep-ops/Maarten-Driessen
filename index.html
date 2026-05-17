@@ -326,7 +326,16 @@ footer{background:var(--bg);color:var(--ink-2);padding:80px 0 30px;border-top:1p
   .hero .lede { margin: 18px auto 32px; max-width: 90%; }
   .hero-grid > div > div[style*="display:flex"] { justify-content: center; }
   .hero-meta { justify-content: center; gap: 24px; text-align: center; margin-top: 40px; padding-top: 24px; flex-wrap: wrap; }
-  .slides { height: auto; aspect-ratio: 16/9; }
+  
+  /* Make mobile slider much neater and smaller */
+  .slider { max-width: 340px; margin: 0 auto; }
+  .slides { height: auto !important; aspect-ratio: 4/3; }
+  .slide-cap { font-size: 9px; padding: 8px 12px; left: 14px; bottom: 14px; }
+  .slider-arrows { right: 14px; bottom: 14px; gap: 4px; }
+  .slider-arrows button { width: 34px; height: 34px; font-size: 14px; }
+  .slider-dots { left: 14px; top: 14px; }
+  .slider-dots span { width: 18px; }
+  
   .fcard .photo { aspect-ratio: 4/3; }
   .card .photo { aspect-ratio: 4/3; }
 }
